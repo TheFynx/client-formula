@@ -1,10 +1,8 @@
 {% set packages = salt['grains.filter_by']({
-        'Ubuntu':   ['vim', 'git', 'htop', 'terminator'],
-        'Debian':   ['vim', 'git', 'htop', 'terminator'],
-        'Arch':     ['vim', 'git', 'htop', 'terminator'],
-        'Windows':  ['googlechrome', 'adobereader', 'git.install',
-                    '7zip.install', 'vlc', 'jdk8', 'virtualbox',
-                    'dropbox', 'visualstudiocode', 'awscli', 'golang',
-                    'conemu', 'python'],
+        'Ubuntu':   ['vim', 'git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant'],
+        'Debian':   ['vim', 'git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant'],
+        'Arch':     ['vim', 'git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant'],
+        'Windows':  ['googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8', 'virtualbox',
+                    'dropbox', 'visualstudiocode', 'awscli', 'golang', 'conemu', 'python'],
    })
 %}

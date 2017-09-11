@@ -1,0 +1,42 @@
+# update path
+if [ -d "/usr/share/bcc/tools" ]; then
+    export PATH=/usr/share/bcc/tools:$PATH
+fi
+
+if [ -d "/usr/local/bin" ]; then
+    export PATH=/usr/local/bin:$PATH
+fi
+
+# Add home local bin
+if [ -d "<%= node["dotfiles"]["profile"]["home"] %>/.local/bin" ]; then
+    export PATH=<%= node["dotfiles"]["profile"]["home"] %>/.local/bin:$PATH
+fi
+
+# include sbin in PATH
+if [ -d "/sbin" ]; then
+    export PATH="/sbin:$PATH"
+fi
+
+if [ -d "/usr/sbin" ]; then
+    export PATH="/usr/sbin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "<%= node["dotfiles"]["profile"]["home"] %>/bin" ]; then
+    export PATH="<%= node["dotfiles"]["profile"]["home"] %>/bin:$PATH"
+fi
+
+# Add shim/rbenv to path.
+if [ -n "$(command -v rbenv)" ]; then
+    eval "$(rbenv init -)"
+fi
+
+# set GOPATH if it exists
+if [ -d "<%= node["dotfiles"]["profile"]["home"] %>/.go" ]; then
+    export GOPATH="<%= node["dotfiles"]["profile"]["home"] %>/.go"
+fi
+
+# Add Go Bin to PATH
+if [ -d "$GOPATH/bin" ]; then
+    export PATH="$PATH:$GOPATH/bin"
+fi

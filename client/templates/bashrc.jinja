@@ -1,0 +1,59 @@
+# .bashrc
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+    *) return;;
+esac
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# For Travis CLI
+[ -f "<%= node["dotfiles"]["profile"]["home"] %>/.travis/travis.sh" ] && source <%= node["dotfiles"]["profile"]["home"] %>/.travis/travis.sh
+
+
+# Prompt Config
+[ -z "$PS1" ] && return
+
+# enable color support of ls and also add handy aliases
+if [ -x "/usr/bin/dircolors" ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+if [ -n "$(command -v vim)" ]; then
+    alias vcb="vim +BundleClean! +BundleInstall! +qall!"
+    alias v="vim"
+    alias vi="vim"
+fi
+
+bind TAB:menu-complete
+
+# Source global definitions
+if [ -f "/etc/bashrc" ]; then
+        . /etc/bashrc
+fi
+
+# Load Bash It
+if [ -f "$BASH_IT/bash_it.sh" ]; then
+    # Path to the bash it configuration
+    export BASH_IT="<%= node["dotfiles"]["profile"]["home"] %>/.bash_it"
+
+    # Lock and Load a custom theme file
+    # location /.bash_it/themes/
+    export BASH_IT_THEME='powerline'
+
+    # Don't check mail when opening terminal.
+    unset MAILCHECK
+
+    # Set this to false to turn off version control status checking within the prompt for all themes
+    export SCM_CHECK=true
+
+    source $BASH_IT/bash_it.sh
+fi
