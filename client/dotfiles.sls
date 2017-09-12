@@ -1,4 +1,7 @@
 {% from "client/map.jinja" import files with context %}
+{% set user = salt['pillar.get']('client:user', 'levi') %}
+{% set group = salt['pillar.get']('client:group', 'levi') %}
+{% set home = salt['pillar.get']('client:home', '/users/levi') %}
 
 {% for file in files %}
 dotfile_{{ file }}:
@@ -9,6 +12,7 @@ dotfile_{{ file }}:
     - user: {{ user }}
     - group: {{ group }}
     - mode: 775
+    - makedirs: True
     - source: salt://client/templates/{{ file }}.jinja
 {% endfor %}
 
@@ -21,5 +25,6 @@ vimrc:
     - user: {{ user }}
     - group: {{ group }}
     - mode: 775
+    - makedirs: True
     - source: salt://client/templates/vimrc.jinja
 {% endif %}

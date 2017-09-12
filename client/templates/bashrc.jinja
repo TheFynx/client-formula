@@ -10,7 +10,7 @@ esac
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # For Travis CLI
-[ -f "<%= node["dotfiles"]["profile"]["home"] %>/.travis/travis.sh" ] && source <%= node["dotfiles"]["profile"]["home"] %>/.travis/travis.sh
+[ -f "{{ home }}/.travis/travis.sh" ] && source <%= node["dotfiles"]["profile"]["home"] %>/.travis/travis.sh
 
 
 # Prompt Config
@@ -43,7 +43,7 @@ fi
 # Load Bash It
 if [ -f "$BASH_IT/bash_it.sh" ]; then
     # Path to the bash it configuration
-    export BASH_IT="<%= node["dotfiles"]["profile"]["home"] %>/.bash_it"
+    export BASH_IT="{{ home }}/.bash_it"
 
     # Lock and Load a custom theme file
     # location /.bash_it/themes/

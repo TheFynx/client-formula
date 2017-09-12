@@ -1,10 +1,14 @@
 {% set packages = salt['grains.filter_by']({
-        'Ubuntu':   ['vim', 'git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant'],
-        'Debian':   ['vim', 'git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant'],
-        'Arch':     ['vim', 'git', 'htop', 'terminator', 'chromium', 'docker', 'vagrant'],
-        'Windows':  ['googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8', 'virtualbox',
+        'Ubuntu':   ['git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant', 'rustc', 'cargo'],
+        'Debian':   ['git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant', 'rustc', 'cargo'],
+        'Arch':     ['git', 'htop', 'terminator', 'chromium', 'docker', 'vagrant', ''],
+        'Windows':  ['googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8', 'virtualbox', 'rust'
                     'dropbox', 'visualstudiocode', 'awscli', 'golang', 'conemu', 'python', 'insomnia-rest-api-client'],
    })
+%}
+
+{% set vim_packages = ['liblua5.1-dev', 'luajit', 'libluajit-5.1', 'python-dev', 'ruby-dev', 'libperl-dev',
+                   'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev' ]
 %}
 
 {% set files = salt['grains.filter_by']({

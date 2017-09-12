@@ -1,11 +1,16 @@
 #!/bin/bash
 
+{% if grains['os'] == 'Windows' -%}
+# debian specific aliases
+alias open='start "$@"'
+{% else %}
 # debian specific aliases
 alias open='xdg-open "$@"'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
+{% endif -%}
 
-# Easier navigation: .., ..., ...., ....., ~ and -
+# Easier navigation
 alias ..="cd .."
 alias ...="cd ../.."
 alias ..2="cd ../.."
@@ -14,8 +19,7 @@ alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 alias ..6="cd ../../../../../.."
 alias ..7="cd ../../../../../../.."
-alias ~="cd ~" # `cd` is probably faster to type though
-alias -- -="cd -"
+alias --="cd -"
 
 # Shortcuts
 alias dl="cd ~/Downloads"
@@ -23,9 +27,8 @@ alias g="git"
 alias h="history"
 alias gc=". /usr/local/bin/gitdate && git commit -v "
 alias pgrep='ps -ef|grep'
-alias cnt='ls -l ./|grep -v ^l|wc -l'
 alias fuck='sudo $(history -p \!\!)'
-alias gsc='git commit -S -a -m'
+alias gsc='. /usr/local/bin/gitdate && git commit -v -S -a -m'
 alias rtfm='man $(history -p \!\!)'
 
 # Reload the shell (i.e. invoke as a login shell)
@@ -33,9 +36,7 @@ alias reload="exec $SHELL -l"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
-    colorflag="--color"
-else # OS X `ls`
-    colorflag="-G"
+    colorflag="--color=auto"
 fi
 
 if [ -n "$(command -v exa)" ]; then
@@ -91,18 +92,6 @@ alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
-# Canonical hex dump; some systems have this symlinked
-command -v hd > /dev/null || alias hd="hexdump -C"
-
-# OS X has no `md5sum`, so use `md5` as a fallback
-command -v md5sum > /dev/null || alias md5sum="md5"
-
-# OS X has no `sha1sum`, so use `shasum` as a fallback
-command -v sha1sum > /dev/null || alias sha1sum="shasum"
-
-# Trim new lines and copy to clipboard
-alias c="tr -d '\n' | xclip -selection clipboard"
-
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
@@ -128,7 +117,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 # untar
-alias untar='tar xvf'
+alias untar='tar -xvf'
 
 # Pipe my public key to my clipboard.
 alias pubkey="more ~/.ssh/id_rsa.pub | xclip -selection clipboard | echo '=> Public key copied to pasteboard.'"

@@ -82,21 +82,6 @@ if [ $? -eq 0 ]; then
     }
 fi
 
-<% if node['platform_family'] == 'mac_os_x' %>
-fixcamera(){
-    sudo killall AppleCameraAssistant;sudo killall VDCAssistant
-}
-<% end %>
-
-# Cloudformation Verify
-cfnver() {
-    if [ -n $(command -v aws) ]; then
-        aws cloudformation validate-template --template-body file://"$(pwd)/${1}"
-    else
-        echo "Please install aws to use this command"
-    fi
-}
-
 # Create a data URL from a file
 dataurl() {
     local mimeType=$(file -b --mime-type "$1")
@@ -104,15 +89,6 @@ dataurl() {
         mimeType="${mimeType};charset=utf-8"
     fi
     echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
-}
-
-# Create a git.io short URL
-gitio() {
-    if [ -z "${1}" -o -z "${2}" ]; then
-        echo "Usage: \`gitio slug url\`"
-        return 1
-    fi
-    curl -i http://git.io/ -F "url=${2}" -F "code=${1}"
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
@@ -146,11 +122,6 @@ json() {
 # Run `dig` and display the most useful info
 digga() {
     dig +nocmd "$1" any +multiline +noall +answer
-}
-
-# Query Wikipedia via console over DNS
-mwiki() {
-    dig +short txt "$*".wp.dg.cx
 }
 
 # UTF-8-encode a string of Unicode symbols
@@ -214,16 +185,6 @@ getcertnames() {
     fi
 }
 
-# `o` with no arguments opens the current directory, otherwise opens the given
-# location
-o() {
-    if [ $# -eq 0 ]; then
-        xdg-open .  > /dev/null 2>&1
-    else
-        xdg-open "$@" > /dev/null 2>&1
-    fi
-}
-
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
@@ -279,18 +240,6 @@ openimage() {
         --scale-down --draw-filename \
         --image-bg black \
         --start-at "$file"
-}
-
-# get dbus session
-dbs() {
-    local t=$1
-    if [[  -z "$t" ]]; then
-        local t="session"
-    fi
-
-    dbus-send --$t --dest=org.freedesktop.DBus \
-        --type=method_call  --print-reply \
-        /org/freedesktop/DBus org.freedesktop.DBus.ListNames
 }
 
 # check if uri is up

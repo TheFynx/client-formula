@@ -1,8 +1,8 @@
 # Following automatically calls "startx" when you login:
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
 
-if [ -f "<%= node["dotfiles"]["profile"]["home"] %>/.bashrc" ] ; then
-  source <%= node["dotfiles"]["profile"]["home"] %>/.bashrc
+if [ -f "{{ home }}/.bashrc" ] ; then
+  source {{ home }}/.bashrc
 fi
 
 # Load the shell dotfiles, and then some:
@@ -32,7 +32,7 @@ done
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config
 # ignoring wildcards
-[[ -e "<%= node["dotfiles"]["profile"]["home"] %>/.ssh/config" ]] && complete -o "default" \
+[[ -e "{{ home }}/.ssh/config" ]] && complete -o "default" \
         -o "nospace" \
         -W "$(grep "^Host" ~/.ssh/config | \
         grep -v "[?*]" | cut -d " " -f2 | \
