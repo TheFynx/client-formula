@@ -5,15 +5,6 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Write-Warning "Script requires Admin Privileges.`nPlease re-run this script as an Administrator."
     Break
 }
-
-
-function promptContinue {
-    param ($msg="Client Setup encountered an error")
-    $yn = Read-Host "$Msg. Continue? [y|N]"
-    if ( $yn -NotLike 'y*' ) {
-        Break
-    }
-}
   
 function die {
     param ($msg="Client Setup encountered an error. Exiting")
