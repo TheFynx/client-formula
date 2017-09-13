@@ -32,9 +32,9 @@ else
     platform=''
 fi
 
-if [[ "$platform" =~ ".*Ubuntu" ]]
+if [[ "$platform" =~ ".*Ubuntu" ]]; then
     apt-get install -y python git
-elif [[ "$platform" =~ ".*Debian" ]]
+elif [[ "$platform" =~ ".*Debian" ]]; then
     apt-get install -y python git
 else
     echo "No supported platform found"
@@ -47,7 +47,7 @@ if [ -z $(command -v salt-call) ]; then
     elif [ -n $(command -v salt-call) ]; then
         wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
         sudo sh bootstrap-salt.sh
-    elif [ -n $(command) -v python ]
+    elif [ -n $(command) -v python ]; then
         python -c 'import urllib; print urllib.urlopen("https://bootstrap.saltstack.com").read()' > bootstrap-salt.sh
         sudo sh bootstrap-salt.sh
     else
@@ -56,8 +56,24 @@ if [ -z $(command -v salt-call) ]; then
     fi
 fi
 
+mkdir -p /srv/salt /srv/formulas /etc/salt/
+
+cat > '/etc/salt/minion' << EOF
+file_client: local
+file_roots:
+  base:
+    - /srv/salt
+    - /srv/formulas/client-formula
+EOF
+
+cat > '/srv/salt/top.sls' << EOF
+base:
+  '*':
+    - client
+EOF
+
 echo ">>> Running salt to configure machine"
-salt-call --local state.apply || prompt_continue
+salt-call state.apply || prompt_continue
 
 # cleanup
 cd - || prompt_continue

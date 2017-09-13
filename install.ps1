@@ -5,7 +5,7 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Write-Warning "Script requires Admin Privileges.`nPlease re-run this script as an Administrator."
     Break
 }
-  
+
 function die {
     param ($msg="Client Setup encountered an error. Exiting")
     Write-host "$msg."
@@ -43,10 +43,10 @@ Push-Location $tempInstallDir
 # Run salt
 Set-Location -Path $tempInstallDir
 salt-call --local state.apply
-  
+
 if ( -not $? ) { Pop-Location;  die "Error running salt minion" }
 
 Pop-Location
-  
+
 # End message to indicate completion of setup
 Write-Host "`n`nClient is now configured."
