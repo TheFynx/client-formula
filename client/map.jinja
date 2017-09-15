@@ -10,7 +10,7 @@
 %}
 
 {% set dot_files = salt['grains.filter_by']({
-        'Debian':   'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile', 'terminator', 'vimrc'
-        'Windows':  'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile'
+        'Debian':   "'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile', 'terminator', 'vimrc'",
+        'Windows':  "'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile'",
    }, default='Debian')
 %}
