@@ -1,7 +1,7 @@
 {% set packages = salt['grains.filter_by']({
         'Ubuntu':   ['git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant', 'rustc', 'cargo'],
         'Debian':   ['git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant', 'rustc', 'cargo'],
-        'Arch':     ['git', 'htop', 'terminator', 'chromium', 'docker', 'vagrant', ''],
+        'Arch':     ['git', 'htop', 'terminator', 'chromium', 'docker', 'vagrant'],
         'Windows':  ['googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8', 'virtualbox', 'rust'
                     'dropbox', 'visualstudiocode', 'awscli', 'golang', 'conemu', 'python', 'insomnia-rest-api-client'],
    })
@@ -11,8 +11,8 @@
                    'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev' ]
 %}
 
-{% set files = salt['grains.filter_by']({
+{% set dot_files = salt['grains.filter_by']({
         'Ubuntu':   ['aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile', 'terminator', 'vimrc'],
-        'Windows':  ['aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile'].
+        'Windows':  ['aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile'],
    })
 %}
