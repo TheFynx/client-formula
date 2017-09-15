@@ -13,7 +13,7 @@
 {% for dot in dot_files %}
 {{ home }}/.{{ dot }}:
   file.managed:
-    - source: salt://client/templates/{{ dot }}.jinja
+    - source: salt://templates/{{ dot }}.jinja
     - user: {{ user }}
     - group: {{ group }}
     - mode: 775
@@ -27,5 +27,5 @@
     - group: {{ group }}
     - mode: 775
     - makedirs: True
-    - source: salt://client/templates/vimrc.jinja
+    - source: salt://templates/vimrc.jinja
 {% endif %}
