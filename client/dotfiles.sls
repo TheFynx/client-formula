@@ -3,7 +3,7 @@
 {% if grains['os_family'] == 'Debian' %}
 {% set user = salt['pillar.get']('client:user', 'levi') %}
 {% set group = salt['pillar.get']('client:group', 'levi') %}
-{% set home = salt['pillar.get']('client:home', '/Home/levi') %}
+{% set home = salt['pillar.get']('client:home', '/home/levi') %}
 {% elif grains['os_family'] == 'Windows' %}
 {% set user = salt['pillar.get']('client:user', 'levit') %}
 {% set group = salt['pillar.get']('client:group', 'levit') %}
