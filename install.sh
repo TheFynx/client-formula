@@ -7,20 +7,9 @@ client_git="https://github.com/TheFynx/client-forumla.git"
 
 mkdir -p ~/formulas
 
-cd ~/formulas
+cd ~/
 
-function prompt_continue () {
-  echo "!!!!!!!!!!!!!!!!!!!!!!!"
-  echo "dotFiles encountered an error in the previous step."
-  read -p "Ignore the error and contine with installation? [yN] " </dev/tty
-  case "$REPLY" in
-    [yY]*) return
-      ;;
-    *) echo "Not cleaning up $tempInstallDir; exiting."
-      exit 2
-      ;;
-  esac
-}
+USER_HOME=$(pwd)
 
 if [ -f '/etc/*-release' ]; then
     platform=$(cat /etc/*-release | awk 'NR==1{print $1}')
@@ -58,18 +47,17 @@ git clone ${client_git}
 
 sudo mkdir -p /etc/salt/
 
-sudo ln -s ~/formulas/client-formula/client /srv/salt/
+sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt
 
 sudo cat > '/etc/salt/minion' << EOF
 file_client: local
 file_roots:
   base:
     - /srv/salt
-    - /srv/formulas/client-formula
 EOF
 
 echo ">>> Running salt to configure machine"
-sudo salt-call state.apply || prompt_continue
+sudo salt-call state.apply
 
 # End message
 cat <<EOF
