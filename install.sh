@@ -30,9 +30,9 @@ else
     platform=''
 fi
 
-if [[ "$platform" =~ ".*Ubuntu" ]]; then
+if [[ "$platform" =~ "*Ubuntu" ]]; then
     apt-get install -y python git
-elif [[ "$platform" =~ ".*Debian" ]]; then
+elif [[ "$platform" =~ "*Debian" ]]; then
     apt-get install -y python git
 else
     echo "No supported platform found"
@@ -58,7 +58,7 @@ git clone ${client_git}
 
 mkdir -p /etc/salt/
 
-ln -s ~/formulas/client-formula/client /srv/salt/
+sudo ln -s ~/formulas/client-formula/client /srv/salt/
 
 cat > '/etc/salt/minion' << EOF
 file_client: local
@@ -69,11 +69,7 @@ file_roots:
 EOF
 
 echo ">>> Running salt to configure machine"
-salt-call state.apply || prompt_continue
-
-# cleanup
-cd - || prompt_continue
-sudo rm -rf "$tempInstallDir"
+sudo salt-call state.apply || prompt_continue
 
 # End message
 cat <<EOF
