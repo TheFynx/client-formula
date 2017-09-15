@@ -3,13 +3,11 @@
 set -o nounset -o pipefail
 
 # dotFile config
-dotfilesGit="https://github.com/TheFynx/dotFiles.git"
+client_git="https://github.com/TheFynx/client-forumla.git"
 
-tempInstallDir="/tmp/salt"
+mkdir -p ~/formulas
 
-mkdir -p $tempInstallDir
-
-cd $tempInstallDir
+cd ~/formulas
 
 function prompt_continue () {
   echo "!!!!!!!!!!!!!!!!!!!!!!!"
@@ -56,7 +54,11 @@ if [ -z $(command -v salt-call) ]; then
     fi
 fi
 
-mkdir -p /srv/salt /srv/formulas /etc/salt/
+git clone ${client_git}
+
+mkdir -p /etc/salt/
+
+ln -s ~/formulas/client-formula/client /srv/salt/
 
 cat > '/etc/salt/minion' << EOF
 file_client: local
@@ -64,12 +66,6 @@ file_roots:
   base:
     - /srv/salt
     - /srv/formulas/client-formula
-EOF
-
-cat > '/srv/salt/top.sls' << EOF
-base:
-  '*':
-    - client
 EOF
 
 echo ">>> Running salt to configure machine"
