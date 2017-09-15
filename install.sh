@@ -3,7 +3,7 @@
 set -o nounset -o pipefail
 
 # dotFile config
-client_git="https://github.com/TheFynx/client-forumla.git"
+client_git="https://github.com/TheFynx/client-formula.git"
 
 mkdir -p ~/formulas
 
@@ -11,17 +11,20 @@ cd ~/
 
 USER_HOME=$(pwd)
 
+cd ~/formulas
+
 if [ -f '/etc/*-release' ]; then
-    platform=$(cat /etc/*-release | awk 'NR==1{print $1}')
+    platform=$(cat /etc/*-release | awk '{print $1}')
 elif [ -n $(command -v lsb_release) ]; then
-    platform=$(lsb_release -a)
+    platform=$(lsb_release -a | awk 'NR==1{print $3}')
 else
     platform=''
 fi
 
-if [[ "$platform" =~ "*Ubuntu" ]]; then
+
+if [[ "$platform" == "Ubuntu" ]]; then
     sudo apt-get install -y python git
-elif [[ "$platform" =~ "*Debian" ]]; then
+elif [[ "$platform" == "Debian" ]]; then
     sudo apt-get install -y python git
 else
     echo "No supported platform found"
@@ -45,16 +48,18 @@ fi
 
 git clone ${client_git}
 
-sudo mkdir -p /etc/salt/
-
 sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt
 
-sudo cat > '/etc/salt/minion' << EOF
+sudo chmod 777 /etc/salt/minion
+
+cat > '/etc/salt/minion' << EOF
 file_client: local
 file_roots:
   base:
     - /srv/salt
 EOF
+
+sudo chmod 644 /etc/salt/minion
 
 echo ">>> Running salt to configure machine"
 sudo salt-call state.apply
