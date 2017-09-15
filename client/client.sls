@@ -1,3 +1,3 @@
 include:
-  - dotfiles
   - packages
+  - dotfiles
