@@ -31,9 +31,9 @@ else
 fi
 
 if [[ "$platform" =~ "*Ubuntu" ]]; then
-    apt-get install -y python git
+    sudo apt-get install -y python git
 elif [[ "$platform" =~ "*Debian" ]]; then
-    apt-get install -y python git
+    sudo apt-get install -y python git
 else
     echo "No supported platform found"
 fi
@@ -56,11 +56,11 @@ fi
 
 git clone ${client_git}
 
-mkdir -p /etc/salt/
+sudo mkdir -p /etc/salt/
 
 sudo ln -s ~/formulas/client-formula/client /srv/salt/
 
-cat > '/etc/salt/minion' << EOF
+sudo cat > '/etc/salt/minion' << EOF
 file_client: local
 file_roots:
   base:
