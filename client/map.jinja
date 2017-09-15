@@ -5,10 +5,6 @@
    }, default='Debian')
 %}
 
-{% set vim_packages = ['liblua5.1-dev', 'luajit', 'libluajit-5.1', 'python-dev', 'ruby-dev', 'libperl-dev',
-                   'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev' ],
-%}
-
 {% set dot_files = salt['grains.filter_by']({
         'Debian':   ['aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile', 'terminator', 'vimrc'],
         'Windows':  "'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile'",
