@@ -7,7 +7,7 @@
 {% elif grains['os_family'] == 'Windows' %}
 {% set user = salt['pillar.get']('client:user', 'levit') %}
 {% set group = salt['pillar.get']('client:group', 'levit') %}
-{% set home = salt['pillar.get']('client:home', 'C:\Users\levi') %}
+{% set home = salt['pillar.get']('client:home', '/Users/levi') %}
 {% endif %}
 
 {% for dot in dot_files %}
