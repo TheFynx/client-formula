@@ -10,7 +10,7 @@ esac
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # For Travis CLI
-[ -f "{{ home }}/.travis/travis.sh" ] && source <%= node["dotfiles"]["profile"]["home"] %>/.travis/travis.sh
+[ -f "{{ home }}/.travis/travis.sh" ] && source {{ home }}/.travis/travis.sh
 
 
 # Prompt Config

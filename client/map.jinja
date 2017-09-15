@@ -1,5 +1,5 @@
 {% set packages = salt['grains.filter_by']({
-        'Debian':   ['git', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant', 'rustc', 'cargo'],
+        'Debian':   ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant', 'rustc', 'cargo'],
         'Windows':  ['googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8', 'virtualbox', 'rust'
                     'dropbox', 'visualstudiocode', 'awscli', 'golang', 'conemu', 'python', 'insomnia-rest-api-client'],
    }, default='Debian')

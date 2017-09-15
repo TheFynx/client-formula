@@ -6,14 +6,6 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Break
 }
 
-function die {
-    param ($msg="Client Setup encountered an error. Exiting")
-    Write-host "$msg."
-    Break
-}
-
-$tempInstallDir = Join-Path -path $env:TEMP -childpath 'client-formula'
-
 $introduction = @"
 ### This Script will:
 1. Install Chocolatey
@@ -25,11 +17,6 @@ Clear-Host
 
 Write-Host $introduction
 
-# Create the temporary installation directory
-if (!(Test-Path $tempInstallDir -pathType container)) {
-    New-Item -ItemType 'directory' -path $tempInstallDir
-}
-
 Set-ExecutionPolicy Unrestricted
 
 # Install Chocolatey
@@ -38,15 +25,20 @@ iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.p
 # Install Git
 C:\ProgramData\chocolatey\bin\choco.exe install -y git python saltminion
 
-Push-Location $tempInstallDir
+# Create Directories
+New-Item C:\salt\srv -ItemType Directory
+New-Item C:\Users\levit\formulas -ItemType Directory
+
+# Clone Repo
+Set-Location -Path C:\Users\levit\formulas
+git clone https://github.com/TheFynx/client-formula.git
+
+# Link Directories
+mklink /J C:\Users\levit\formulas\client-formula\client C:\salt/srv/salt
 
 # Run salt
-Set-Location -Path $tempInstallDir
-salt-call --local state.apply
-
-if ( -not $? ) { Pop-Location;  die "Error running salt minion" }
-
-Pop-Location
+Set-Location -Path C:\salt\srv\salt
+salt-call --statefile client.sls --local state.apply
 
 # End message to indicate completion of setup
 Write-Host "`n`nClient is now configured."

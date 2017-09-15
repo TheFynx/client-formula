@@ -77,10 +77,10 @@ install_exa:
 install_bash_it:
   cmd.run:
     - name: |
-        git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-        ~/.bash_it/install.sh -s
+        git clone --depth=1 https://github.com/Bash-it/bash-it.git {{ home }}/.bash_it
+        {{ home }}/.bash_it/install.sh -s
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
-    - unless: test -x ~/.bash_it/install.sh
+    - unless: test -x {{ home }}/.bash_it/install.sh
 {% endif %}

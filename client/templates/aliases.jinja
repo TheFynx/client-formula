@@ -1,10 +1,10 @@
 #!/bin/bash
 
-{% if grains['os'] == 'Windows' -%}
-# debian specific aliases
+{% if {{ os }} == 'Windows' %}
+# Windows specific aliases
 alias open='start "$@"'
 {% else %}
-# debian specific aliases
+# Debian specific aliases
 alias open='xdg-open "$@"'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
