@@ -22,13 +22,13 @@
         os: {{ grains['os_family'] }}
     - makedirs: True
 
+{% endfor %}
+
 vimrc_debian:
   file.recurse:
     - source: salt://templates/vimrc.jinja
     - target: {{ home }}/.vimrc
     - makedirs: True
-
-{% endfor %}
 
 {% elif grains['os_family'] == 'Windows' %}
 {% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile' %}
@@ -43,6 +43,7 @@ vimrc_debian:
         os: {{ grains['os_family'] }}
     - makedirs: True
 {% endfor %}
+
 vimrc_windows:
   file.recurse:
     - source: salt://templates/vimrc.jinja
