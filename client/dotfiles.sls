@@ -26,7 +26,7 @@
 
 {{ home }}/.vimrc:
   file.recurse:
-    - source: salt://templates/vimrc.jinja
+    - source: salt://templates/vimrc
     - target: {{ home }}/.vimrc
     - makedirs: True
 
@@ -46,7 +46,7 @@
 
 {{ home }}/.vimrc:
   file.recurse:
-    - source: salt://templates/vimrc.jinja
+    - source: salt://templates/vimrc
     - target: {{ home }}/.vimrc
     - makedirs: True
 {% endif %}

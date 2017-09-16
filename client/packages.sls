@@ -20,7 +20,7 @@ client_packages:
     - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'rustc', 'cargo']
 vim_support:
   pkg.installed:
-    - pkgs: ['liblua*-dev', 'luajit', 'libluajit*', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk*', 'libx11-dev', 'libxpm-dev', 'libxt-dev']
+    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev']
 {% endif %}
 
 install_pygments:
@@ -71,6 +71,8 @@ install_exa:
         cargo install --git https://github.com/ogham/exa
     - cwd: /tmp
     - shell: /bin/bash
+    - require:
+      - pkg: zlib1g-dev
     - timeout: 300
     - unless: test -x /usr/local/bin/exa
 

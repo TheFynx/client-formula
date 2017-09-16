@@ -1,6 +1,6 @@
 #!/bin/bash
 
-{% if {{ os }} == 'Windows' %}
+{% if grains['os_family'] == 'Windows' %}
 # Windows specific aliases
 alias open='start "$@"'
 {% else %}
