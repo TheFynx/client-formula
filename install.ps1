@@ -38,7 +38,7 @@ New-Item -Path C:\salt\srv\salt -TemType SymbolicLink -Value C:\Users\levit\form
 
 # Run salt
 Set-Location -Path C:\salt\srv\salt
-salt-call --statefile client.sls --local state.apply
+salt-call --saltfile client.sls --local state.apply
 
 # End message to indicate completion of setup
 Write-Host "`n`nClient is now configured."
