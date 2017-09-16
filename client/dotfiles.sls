@@ -24,7 +24,7 @@
 
 {% endfor %}
 
-vimrc_debian:
+{{ home }}/.vimrc:
   file.recurse:
     - source: salt://templates/vimrc.jinja
     - target: {{ home }}/.vimrc
@@ -44,7 +44,7 @@ vimrc_debian:
     - makedirs: True
 {% endfor %}
 
-vimrc_windows:
+{{ home }}/.vimrc:
   file.recurse:
     - source: salt://templates/vimrc.jinja
     - target: {{ home }}/.vimrc
