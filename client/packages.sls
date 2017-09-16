@@ -21,13 +21,25 @@ client_packages:
 vim_support:
   pkg.installed:
     - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev']
-{% endif %}
+
+pkgrepo.managed:
+  - humanname: Rust PPA
+  - name: deb http://ppa.launchpad.net/jonathonf/rustlang/ubuntu xenial main
+  - dist: xenial
+  - file: /etc/apt/sources.list.d/rust.list
+  - keyid: F06FC659
+  - keyserver: keyserver.ubuntu.com
+  - require_in:
+    - pkg: rustc
+
+pkg.latest:
+  - name: rustc
+  - refresh: True
 
 install_pygments:
   pip.installed:
     - name: pygments
 
-{% if grains['os_family'] != 'Windows' %}
 install_vim:
   cmd.run:
     - name: |
