@@ -25,7 +25,7 @@
 {% endfor %}
 
 {{ home }}/.vimrc:
-  file.recurse:
+  file.managed:
     - source: salt://templates/vimrc
     - target: {{ home }}/.vimrc
     - makedirs: True
@@ -45,7 +45,7 @@
 {% endfor %}
 
 {{ home }}/.vimrc:
-  file.recurse:
+  file.managed:
     - source: salt://templates/vimrc
     - target: {{ home }}/.vimrc
     - makedirs: True

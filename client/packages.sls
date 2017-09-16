@@ -26,8 +26,6 @@ vim_support:
 install_pygments:
   pip.installed:
     - name: pygments
-    - require:
-      - pkg: python-pip
 
 {% if grains['os_family'] != 'Windows' %}
 install_vim:
@@ -59,8 +57,6 @@ install_vim:
         make
         make install
     - cwd: /tmp
-    - require:
-      - pkg: liblua5.1-dev
     - shell: /bin/bash
     - timeout: 300
     - unless: vim --version | grep '+python'
