@@ -34,7 +34,7 @@ Set-Location -Path C:\Users\levit\formulas
 git clone https://github.com/TheFynx/client-formula.git
 
 # Link Directories
-mklink /J C:\Users\levit\formulas\client-formula\client C:\salt/srv/salt
+New-Item -Path C:\salt\srv\salt -TemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
 
 # Run salt
 Set-Location -Path C:\salt\srv\salt

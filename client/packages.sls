@@ -10,9 +10,9 @@
 {% set home = salt['pillar.get']('client:home', '/Users/levi') %}
 {% endif %}
 
-{% if grains['os'] == 'Windows' %}
+{% if grains['os_family'] == 'Windows' %}
 {% for package in packages %}
-{{ package }}_install:
+{{ package }}:
   chocolatey.installed:
     - name: {{ package }}
 {% endfor %}
@@ -29,7 +29,7 @@ install_pygments:
     - require:
       - pkg: python-pip
 
-{% if grains['os'] != 'Windows' %}
+{% if grains['os_family'] != 'Windows' %}
 install_vim:
   cmd.run:
     - name: |

@@ -10,6 +10,7 @@
 {% set home = salt['pillar.get']('client:home', '/Users/levit') %}
 {% endif %}
 
+{% if grains['os_family'] == 'Debian' %}
 {% for dot in dot_files %}
 {{ home }}/.{{ dot }}:
   file.managed:
@@ -23,14 +24,24 @@
         os: {{ grains['os_family'] }}
     - makedirs: True
 {% endfor %}
-
-{% if grains['os_family'] == 'Windows' %}
+{% elif grains['os_family'] == 'Windows' %}
+{% for dot in dot_files %}
+{{ home }}/.{{ dot }}:
+  file.managed:
+    - template: jinja
+    - source: salt://templates/{{ dot }}.jinja
+    - user: {{ user }}
+    - group: {{ group }}
+    - defaults:
+        home: {{ home }}
+        os: {{ grains['os_family'] }}
+    - makedirs: True
+{% endfor %}
 {{ home }}/_vimrc:
   file.managed:
     - template: jinja
     - user: {{ user }}
     - group: {{ group }}
-    - mode: 775
     - makedirs: True
     - source: salt://templates/vimrc.jinja
 {% endif %}
