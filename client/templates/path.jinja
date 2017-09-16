@@ -12,6 +12,11 @@ if [ -d "{{ home }}/.local/bin" ]; then
     export PATH={{ home }}/.local/bin:$PATH
 fi
 
+# Add Cargo bin
+if [ -d "{{ home }}/.cargo/bin" ]; then
+    export PATH={{ home }}/.cargo/bin:$PATH
+fi
+
 # include sbin in PATH
 if [ -d "/sbin" ]; then
     export PATH="/sbin:$PATH"

@@ -88,7 +88,22 @@ install_exa:
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
-    - unless: test -x /usr/local/bin/exa
+    - unless: test -x {{ home }}/.cargo/bin/exa
+
+
+install_fonts:
+  cmd.run:
+    - name: |
+        git clone https://github.com/powerline/fonts.git --depth=1
+        cd fonts
+        ./install.sh
+        cd ..
+        rm -rf fonts
+    - cwd: /tmp
+    - runas: {{ user }}
+    - shell: /bin/bash
+    - timeout: 300
+    - unless: test -x {{ home }}/.local/share/fonts
 
 install_bash_it:
   cmd.run:
