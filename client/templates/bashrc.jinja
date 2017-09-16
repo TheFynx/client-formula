@@ -40,11 +40,11 @@ if [ -f "/etc/bashrc" ]; then
         . /etc/bashrc
 fi
 
+# Path to the bash it configuration
+export BASH_IT="{{ home }}/.bash_it"
+
 # Load Bash It
 if [ -f "$BASH_IT/bash_it.sh" ]; then
-    # Path to the bash it configuration
-    export BASH_IT="{{ home }}/.bash_it"
-
     # Lock and Load a custom theme file
     # location /.bash_it/themes/
     export BASH_IT_THEME='powerline'
