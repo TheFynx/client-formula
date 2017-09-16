@@ -21,13 +21,15 @@
         home: {{ home }}
         os: {{ grains['os_family'] }}
     - makedirs: True
-{{ home }}/.vimrc:
-  file.managed:
-    - user: {{ user }}
-    - group: {{ group }}
-    - makedirs: True
+
+vimrc_debian:
+  file.recurse:
     - source: salt://templates/vimrc.jinja
+    - target: {{ home }}/.vimrc
+    - makedirs: True
+
 {% endfor %}
+
 {% elif grains['os_family'] == 'Windows' %}
 {% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile' %}
 {{ home }}/.{{ dot }}:
@@ -41,10 +43,9 @@
         os: {{ grains['os_family'] }}
     - makedirs: True
 {% endfor %}
-{{ home }}/_vimrc:
-  file.managed:
-    - user: {{ user }}
-    - group: {{ group }}
-    - makedirs: True
+vimrc_windows:
+  file.recurse:
     - source: salt://templates/vimrc.jinja
+    - target: {{ home }}/.vimrc
+    - makedirs: True
 {% endif %}
