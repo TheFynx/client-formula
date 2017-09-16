@@ -46,7 +46,12 @@ if [ -z $(command -v salt-call) ]; then
     fi
 fi
 
-git clone ${client_git}
+if [ -d "${USER_HOME}/formulas/client-formula "]; then
+    cd ${USER_HOME}/formulas/client-formula
+    git pull
+else
+    git clone ${client_git}
+fi
 
 sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt
 
