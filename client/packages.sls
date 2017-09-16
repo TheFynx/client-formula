@@ -67,8 +67,6 @@ install_exa:
         cargo install --git https://github.com/ogham/exa
     - cwd: /tmp
     - shell: /bin/bash
-    - require:
-      - pkg: zlib1g-dev
     - timeout: 300
     - unless: test -x /usr/local/bin/exa
 
