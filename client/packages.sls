@@ -9,6 +9,7 @@
 {% endif %}
 
 {% if grains['os_family'] == 'Windows' %}
+# Commented out until fix has been merged
 # {% for package in 'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8', 'virtualbox', 'rust', 'dropbox', 'visualstudiocode', 'awscli', 'golang', 'conemu', 'python', 'insomnia-rest-api-client', 'gpg4win', 'docker-for-windows' %}
 # {{ package }}:
   #  chocolatey.installed:
