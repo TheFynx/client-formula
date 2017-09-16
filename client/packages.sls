@@ -1,5 +1,3 @@
-{% from "map.jinja" import packages with context %}
-
 {% if grains['os_family'] == 'Debian' %}
 {% set user = salt['pillar.get']('client:user', 'levi') %}
 {% set group = salt['pillar.get']('client:group', 'levi') %}
@@ -11,7 +9,7 @@
 {% endif %}
 
 {% if grains['os_family'] == 'Windows' %}
-{% for package in packages %}
+{% for package in 'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8', 'virtualbox', 'rust', 'dropbox', 'visualstudiocode', 'awscli', 'golang', 'conemu', 'python', 'insomnia-rest-api-client' %}
 {{ package }}:
   chocolatey.installed:
     - name: {{ package }}
@@ -19,7 +17,7 @@
 {% else %}
 client_packages:
   pkg.installed:
-    - pkgs: {{ packages }}
+    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium', 'docker', 'vagrant', 'rustc', 'cargo']
 vim_support:
   pkg.installed:
     - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev']

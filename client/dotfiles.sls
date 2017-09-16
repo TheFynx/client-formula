@@ -1,5 +1,3 @@
-{% from "map.jinja" import dot_files with context %}
-
 {% if grains['os_family'] == 'Debian' %}
 {% set user = salt['pillar.get']('client:user', 'levi') %}
 {% set group = salt['pillar.get']('client:group', 'levi') %}
@@ -11,7 +9,7 @@
 {% endif %}
 
 {% if grains['os_family'] == 'Debian' %}
-{% for dot in dot_files %}
+{% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile', 'terminator' %}
 {{ home }}/.{{ dot }}:
   file.managed:
     - template: jinja
@@ -23,9 +21,15 @@
         home: {{ home }}
         os: {{ grains['os_family'] }}
     - makedirs: True
+{{ home }}/.vimrc:
+  file.managed:
+    - user: {{ user }}
+    - group: {{ group }}
+    - makedirs: True
+    - source: salt://templates/vimrc.jinja
 {% endfor %}
 {% elif grains['os_family'] == 'Windows' %}
-{% for dot in dot_files %}
+{% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile' %}
 {{ home }}/.{{ dot }}:
   file.managed:
     - template: jinja
@@ -39,7 +43,6 @@
 {% endfor %}
 {{ home }}/_vimrc:
   file.managed:
-    - template: jinja
     - user: {{ user }}
     - group: {{ group }}
     - makedirs: True
