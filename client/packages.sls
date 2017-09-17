@@ -57,10 +57,10 @@ install_pygments:
 install_vim:
   cmd.run:
     - name: |
-        cd /tmp
-        git clone https://github.com/vim/vim.git
-        cd vim/src
-        make distclean
+        cd /tmp &&\
+        git clone https://github.com/vim/vim.git &&\
+        cd vim/src &&\
+        make distclean &&\
         ./configure \
           --enable-multibyte \
           --enable-perlinterp=dynamic \
@@ -80,8 +80,8 @@ install_vim:
           --enable-largefile \
           --disable-netbeans \
           --enable-fail-if-missing
-        make
-        make install
+        make &&\
+        make install &&\
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
@@ -100,10 +100,10 @@ install_exa:
 install_fonts:
   cmd.run:
     - name: |
-        git clone https://github.com/powerline/fonts.git --depth=1
-        cd fonts
-        ./install.sh
-        cd ..
+        git clone https://github.com/powerline/fonts.git --depth=1 &&\
+        cd fonts &&\
+        ./install.sh &&\
+        cd .. &&\
         rm -rf fonts
     - cwd: /tmp
     - runas: {{ user }}
@@ -114,7 +114,7 @@ install_fonts:
 install_bash_it:
   cmd.run:
     - name: |
-        git clone --depth=1 https://github.com/Bash-it/bash-it.git {{ home }}/.bash_it
+        git clone --depth=1 https://github.com/Bash-it/bash-it.git {{ home }}/.bash_it &&\
         {{ home }}/.bash_it/install.sh -s
     - cwd: /tmp
     - shell: /bin/bash
