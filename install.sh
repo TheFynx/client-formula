@@ -46,7 +46,7 @@ if [ -z $(command -v salt-call) ]; then
     fi
 fi
 
-if [ -d "${USER_HOME}/formulas/client-formula " ]; then
+if [ -d "${USER_HOME}/formulas/client-formula" ]; then
     cd ${USER_HOME}/formulas/client-formula
     git pull
 else
