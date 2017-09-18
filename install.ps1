@@ -20,7 +20,7 @@ Write-Host $introduction
 Set-ExecutionPolicy Unrestricted
 
 # Install Chocolatey
-if ( -Not Get-Command "choco.exe" -ErrorAction SilentlyContinue) {
+if ((Get-Command "choco.exe" -ErrorAction SilentlyContinue) -eq $null) {
     iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 
@@ -41,7 +41,7 @@ if ( Test-Path C:\Users\levit\formulas\client-formula ) {
 }
 
 # Link Directories
-if ( -Not Test-Path C:\salt\srv\salt ) {
+if (!(Test-Path C:\salt\srv\salt)) {
     New-Item -Path C:\salt\srv\salt -TemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
 }
 
