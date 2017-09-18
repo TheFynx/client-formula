@@ -20,21 +20,30 @@ Write-Host $introduction
 Set-ExecutionPolicy Unrestricted
 
 # Install Chocolatey
-iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+if ( -Not Get-Command "choco.exe" -ErrorAction SilentlyContinue) {
+    iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+}
 
 # Install Git
 C:\ProgramData\chocolatey\bin\choco.exe install -y git python saltminion
 
 # Create Directories
-New-Item C:\salt\srv -ItemType Directory
-New-Item C:\Users\levit\formulas -ItemType Directory
+New-Item C:\salt\srv -ItemType Directory -Force
+New-Item C:\Users\levit\formulas -ItemType Directory -Force
 
 # Clone Repo
-Set-Location -Path C:\Users\levit\formulas
-git clone https://github.com/TheFynx/client-formula.git
+if ( Test-Path C:\Users\levit\formulas\client-formula ) {
+    Set-Location -Path C:\Users\levit\formulas\client-formula
+    git pull
+} else {
+    Set-Location -Path C:\Users\levit\formulas
+    git clone https://github.com/TheFynx/client-formula.git
+}
 
 # Link Directories
-New-Item -Path C:\salt\srv\salt -TemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
+if ( -Not Test-Path C:\salt\srv\salt ) {
+    New-Item -Path C:\salt\srv\salt -TemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
+}
 
 # Run salt
 Set-Location -Path C:\salt\srv\salt
