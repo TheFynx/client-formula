@@ -48,7 +48,10 @@ client_packages:
     - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'rustc', 'cargo', 'cinnamon']
 vim_support:
   pkg.installed:
-    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev', 'cmake', 'python3', 'python3-dev']
+    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1', 'zlib1g-dev', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev', 'cmake', 'libxt-dev']
+clean_packages:
+  pkg.removed:
+    - pkgs: ['vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common']
 
 install_pygments:
   pip.installed:
@@ -57,29 +60,28 @@ install_pygments:
 install_vim:
   cmd.run:
     - name: |
+        sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-gui-common &&\
+        rm -rf /tmp/vim &&\
+        rm /usr/bin/vim &&\
+        mkdir /usr/include/lua5.1/include &&\
+        cp /usr/include/lua5.1/*.h /usr/include/lua5.1/include/ &&\
         cd /tmp &&\
-        git clone https://github.com/vim/vim.git &&\
+        git clone https://github.com/vim/vim &&\
+        git pull && git fetch &&\
         cd vim/src &&\
         make distclean &&\
-        ./configure \
-          --enable-multibyte \
-          --enable-perlinterp=dynamic \
-          --enable-rubyinterp=dynamic \
-          --with-ruby-command=/usr/local/bin/ruby \
-          --enable-pythoninterp=dynamic \
-          --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
-          --enable-python3interp \
-          --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu \
-          --enable-luainterp \
-          --with-luajit \
-          --enable-cscope \
-          --enable-gui=auto \
-          --with-features=huge \
-          --with-x \
-          --enable-fontset \
-          --enable-largefile \
-          --disable-netbeans \
-          --enable-fail-if-missing
+        ./configure --with-features=huge \
+            --enable-rubyinterp \
+            --enable-largefile \
+            --disable-netbeans \
+            --enable-pythoninterp \
+            --with-python-config-dir=/usr/lib/python2.7/config \
+            --enable-perlinterp \
+            --enable-luainterp \
+            --with-luajit \
+            --enable-fail-if-missing \
+            --with-lua-prefix=/usr/include/lua5.1 \
+            --enable-cscope &&\
         make &&\
         make install &&\
         touch {{ home }}/.local/.vim_built

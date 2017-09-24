@@ -20,6 +20,7 @@
     - defaults:
         home: {{ home }}
         os: {{ grains['os_family'] }}
+        gpgkey: false
     - makedirs: True
 
 {% endfor %}
@@ -34,7 +35,6 @@
     - defaults:
         home: {{ home }}
         os: {{ grains['os_family'] }}
-        gpgkey: false
     - makedirs: True
 
 {{ home }}/.vimrc:
