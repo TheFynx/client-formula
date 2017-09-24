@@ -42,7 +42,7 @@ if ( Test-Path C:\Users\levit\formulas\client-formula ) {
 
 # Link Directories
 if (!(Test-Path C:\salt\srv\salt)) {
-    New-Item -Path C:\salt\srv\salt -TemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
+    New-Item -Path C:\salt\srv\salt -ItemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
 }
 
 # Run salt

@@ -17,7 +17,7 @@
 # {% endfor %}
 ChocolateyPackages:
   cmd.run:
-    - name: choco install -y googlechrome adobereader git.install 7zip.install vlc jdk8 virtualbox rust dropbox visualstudiocode awscli golang conemu python insomnia-rest-api-client gpg4win docker-for-windows atom
+    - name: choco install -y googlechrome adobereader git.install 7zip.install vlc jdk8 virtualbox rust dropbox awscli golang conemu python insomnia-rest-api-client gpg4win docker-for-windows atom
 {% else %}
 
 rust_ppa:
@@ -48,7 +48,7 @@ client_packages:
     - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'rustc', 'cargo', 'cinnamon']
 vim_support:
   pkg.installed:
-    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev']
+    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev', 'cmake', 'python3', 'python3-dev']
 
 install_pygments:
   pip.installed:
@@ -82,10 +82,11 @@ install_vim:
           --enable-fail-if-missing
         make &&\
         make install &&\
+        touch {{ home }}/.local/.vim_built
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
-    - unless: vim --version | grep '+python'
+    - unless: test -x {{ home }}/.local/.vim_built
 
 install_exa:
   cmd.run:
@@ -102,7 +103,7 @@ install_fonts:
     - name: |
         git clone https://github.com/powerline/fonts.git --depth=1 &&\
         cd fonts &&\
-        ./install.sh &&\
+        sh ./install.sh &&\
         cd .. &&\
         rm -rf fonts
     - cwd: /tmp

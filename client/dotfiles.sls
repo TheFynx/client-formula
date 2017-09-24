@@ -9,7 +9,7 @@
 {% endif %}
 
 {% if grains['os_family'] == 'Debian' %}
-{% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile', 'terminator' %}
+{% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile' %}
 {{ home }}/.{{ dot }}:
   file.managed:
     - template: jinja
@@ -23,6 +23,18 @@
     - makedirs: True
 
 {% endfor %}
+
+{{ home }}/.config/terminator/config:
+  file.managed:
+    - template: jinja
+    - source: salt://templates/terminator.jinja
+    - user: {{ user }}
+    - group: {{ group }}
+    - mode: 775
+    - defaults:
+        home: {{ home }}
+        os: {{ grains['os_family'] }}
+    - makedirs: True
 
 {{ home }}/.vimrc:
   file.managed:
