@@ -60,7 +60,6 @@ install_pygments:
 install_vim:
   cmd.run:
     - name: |
-        sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-gui-common &&\
         rm -rf /tmp/vim &&\
         rm /usr/bin/vim &&\
         mkdir /usr/include/lua5.1/include &&\
