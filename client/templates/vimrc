@@ -68,6 +68,7 @@
     Bundle 'Glench/Vim-Jinja2-Syntax'
     Bundle 'godlygeek/tabular'
     Bundle 'scrooloose/nerdtree'
+    Bundle 'scrooloose/nerdcommenter'
     Bundle 'tpope/vim-repeat'
     Bundle 'tpope/vim-speeddating'
     Bundle 'tpope/vim-surround'

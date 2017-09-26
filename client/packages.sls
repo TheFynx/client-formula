@@ -58,11 +58,11 @@ vim_support:
   pkg.installed:
     - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev',
              'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev',
-             'cmake', 'libxt-dev', 'libbonoboui2-dev', 'python3-dev', 'libperl-dev', 'lua5.1', 'lua5.1-dev']
+             'cmake', 'libxt-dev', 'libbonoboui2-dev', 'python3-dev', 'libperl-dev', 'lua5.1', 'build-essential']
 
 {% for pkg in 'vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common' %}
-pkg.removed:
-  - name: {{ pkg }}
+{{ pkg }}:
+  pkg.removed
 {% endfor %}
 
 install_pygments:
@@ -100,7 +100,7 @@ install_vim:
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
-    - unless: test -x {{ home }}/.local/.vim_built
+    - unless: test -x /usr/local/bin/vim
 
 install_exa:
   cmd.run:
