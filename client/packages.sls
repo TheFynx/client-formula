@@ -43,12 +43,23 @@ cinnamon_ppa:
     - name: cinnamon
     - refresh: True
 
+atom_ppa:
+  pkgrepo.managed:
+    - ppa: webupd8team/atom
+
+  pkg.latest:
+    - name: atom
+    - refresh: True
+
 client_packages:
   pkg.installed:
     - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'rustc', 'cargo', 'cinnamon']
 vim_support:
   pkg.installed:
-    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1', 'zlib1g-dev', 'python-dev', 'ruby-dev', 'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev', 'cmake', 'libxt-dev']
+    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1', 'zlib1g-dev', 'python-dev', 'ruby-dev',
+             'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev',
+             'cmake', 'libxt-dev', 'libbonoboui2-dev', 'python3-dev', 'libperl-dev', 'lua5.1', 'lua5.1-dev']
+
 {% for pkg in 'vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common' %}
 {{ pkg }}:
   pkg.removed
@@ -71,19 +82,20 @@ install_vim:
         cd vim/src &&\
         make distclean &&\
         ./configure --with-features=huge \
-            --enable-rubyinterp \
-            --enable-largefile \
-            --disable-netbeans \
-            --enable-pythoninterp \
+            --enable-multibyte \
+            --enable-rubyinterp=yes \
+            --enable-pythoninterp=yes \
             --with-python-config-dir=/usr/lib/python2.7/config \
-            --enable-perlinterp \
-            --enable-luainterp \
-            --with-luajit \
-            --enable-fail-if-missing \
-            --with-lua-prefix=/usr/include/lua5.1 \
-            --enable-cscope &&\
-        make &&\
+            --enable-python3interp=yes \
+            --with-python3-config-dir=/usr/lib/python3.5/config \
+            --enable-perlinterp=yes \
+            --enable-luainterp=yes \
+            --enable-gui=gtk2 \
+            --enable-cscope \
+            --prefix=/usr/local \
+        make VIMRUNTIMEDIR=/usr/local/share/vim/vim80 &&\
         make install &&\
+        update-alternatives --set editor /usr/bin/vim
         touch {{ home }}/.local/.vim_built
     - cwd: /tmp
     - shell: /bin/bash
