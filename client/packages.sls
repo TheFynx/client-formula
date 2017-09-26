@@ -20,16 +20,20 @@ ChocolateyPackages:
     - name: choco install -y googlechrome adobereader git.install 7zip.install vlc jdk8 virtualbox rust dropbox awscli golang conemu python insomnia-rest-api-client gpg4win docker-for-windows atom
 {% else %}
 
+#rust_ppa:
+#  pkgrepo.managed:
+    #- humanname: Rust PPA
+    #- name: deb http://ppa.launchpad.net/jonathonf/rustlang/ubuntu xenial main
+    #- dist: xenial
+    #- file: /etc/apt/sources.list.d/rust.list
+    #- keyid: F06FC659
+    #- keyserver: keyserver.ubuntu.com
+    #- require_in:
+    #   - pkg: rustc
+
 rust_ppa:
   pkgrepo.managed:
-    - humanname: Rust PPA
-    - name: deb http://ppa.launchpad.net/jonathonf/rustlang/ubuntu xenial main
-    - dist: xenial
-    - file: /etc/apt/sources.list.d/rust.list
-    - keyid: F06FC659
-    - keyserver: keyserver.ubuntu.com
-    - require_in:
-      - pkg: rustc
+    - ppa: jonathonf/rustlang
 
   pkg.latest:
     - name: rustc
@@ -56,9 +60,9 @@ client_packages:
     - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'rustc', 'cargo', 'cinnamon']
 vim_support:
   pkg.installed:
-    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev',
+    - pkgs: ['liblua5.2-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev',
              'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev',
-             'cmake', 'libxt-dev', 'libbonoboui2-dev', 'python3-dev', 'libperl-dev', 'lua5.1', 'build-essential']
+             'cmake', 'libxt-dev', 'libbonoboui2-dev', 'python3-dev', 'libperl-dev', 'lua5.2', 'build-essential']
 
 {% for pkg in 'vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common' %}
 {{ pkg }}:
@@ -72,35 +76,33 @@ install_pygments:
 install_vim:
   cmd.run:
     - name: |
-        rm -rf /tmp/vim &&\
-        rm /usr/bin/vim &&\
-        mkdir /usr/include/lua5.1/include &&\
-        cp /usr/include/lua5.1/*.h /usr/include/lua5.1/include/ &&\
+        if [ -d "/tmp/vim" ]; then rm -rf /tmp/vim; fi &&\
+        if [ -d "/usr/bin/vim" ]; then rm /usr/bin/vim; fi &&\
+        if [ ! -d "/usr/include/lua" ]; then ln -s /usr/include/lua5.2 /usr/include/lua && ln -s /usr/lib/x86_64-linux-gnu/liblua5.2.so /usr/local/lib/liblua.so; fi &&\
         cd /tmp &&\
         git clone https://github.com/vim/vim &&\
-        git pull && git fetch &&\
-        cd vim/src &&\
-        make distclean &&\
+        cd vim &&\
         ./configure --with-features=huge \
             --enable-multibyte \
-            --enable-rubyinterp=yes \
-            --enable-pythoninterp=yes \
-            --with-python-config-dir=/usr/lib/python2.7/config \
-            --enable-python3interp=yes \
-            --with-python3-config-dir=/usr/lib/python3.5/config \
-            --enable-perlinterp=yes \
-            --enable-luainterp=yes \
-            --enable-gui=gtk2 \
+            --enable-rubyinterp \
+            --enable-pythoninterp \
+            --with-python-config-dir=$(python-config --configdir)u \
+            --enable-python3interp \
+            --with-python3-config-dir=$(python3-config --configdir) \
+            --enable-perlinterp \
+            --enable-luainterp \
+            --with-lua-prefix=/usr/include/lua5.2 \
+            --enable-gui=no \
             --enable-cscope \
-            --prefix=/usr/local \
-        make VIMRUNTIMEDIR=/usr/local/share/vim/vim80 &&\
+            --prefix=/usr \
+        make VIMRUNTIMEDIR=/usr/share/vim/vim80 &&\
         make install &&\
-        update-alternatives --set editor /usr/bin/vim
+        update-alternatives --set editor /usr/bin/vim &&\
         touch {{ home }}/.local/.vim_built
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
-    - unless: test -x /usr/local/bin/vim
+    - unless: test -f {{ home }}/.local/.vim_built
 
 install_exa:
   cmd.run:
