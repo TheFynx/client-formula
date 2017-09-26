@@ -56,7 +56,7 @@ client_packages:
     - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'rustc', 'cargo', 'cinnamon']
 vim_support:
   pkg.installed:
-    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1', 'zlib1g-dev', 'python-dev', 'ruby-dev',
+    - pkgs: ['liblua5.1-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev',
              'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev',
              'cmake', 'libxt-dev', 'libbonoboui2-dev', 'python3-dev', 'libperl-dev', 'lua5.1', 'lua5.1-dev']
 
