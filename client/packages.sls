@@ -86,7 +86,6 @@ install_vim:
             --prefix=/usr \
         make VIMRUNTIMEDIR=/usr/share/vim/vim80 &&\
         make install &&\
-        update-alternatives --set editor /usr/bin/vim &&\
         touch {{ home }}/.local/.vim_built
     - cwd: /tmp
     - shell: /bin/bash
