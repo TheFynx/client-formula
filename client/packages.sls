@@ -17,19 +17,8 @@
 # {% endfor %}
 ChocolateyPackages:
   cmd.run:
-    - name: choco install -y googlechrome adobereader git.install 7zip.install vlc jdk8 virtualbox rust dropbox awscli golang conemu python insomnia-rest-api-client gpg4win docker-for-windows atom
+    - name: choco install -y googlechrome git.install 7zip.install vlc jdk8 virtualbox  dropbox awscli conemu python insomnia-rest-api-client gpg4win docker-toolbox atom everything wox
 {% else %}
-
-#rust_ppa:
-#  pkgrepo.managed:
-    #- humanname: Rust PPA
-    #- name: deb http://ppa.launchpad.net/jonathonf/rustlang/ubuntu xenial main
-    #- dist: xenial
-    #- file: /etc/apt/sources.list.d/rust.list
-    #- keyid: F06FC659
-    #- keyserver: keyserver.ubuntu.com
-    #- require_in:
-    #   - pkg: rustc
 
 rust_ppa:
   pkgrepo.managed:
@@ -86,7 +75,7 @@ install_vim:
             --enable-multibyte \
             --enable-rubyinterp \
             --enable-pythoninterp \
-            --with-python-config-dir=$(python-config --configdir)u \
+            --with-python-config-dir=$(python-config --configdir) \
             --enable-python3interp \
             --with-python3-config-dir=$(python3-config --configdir) \
             --enable-perlinterp \
@@ -106,8 +95,7 @@ install_vim:
 
 install_exa:
   cmd.run:
-    - name: |
-        cargo install --git https://github.com/ogham/exa
+    - name: cargo install --git https://github.com/ogham/exa
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
