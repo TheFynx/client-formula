@@ -58,24 +58,36 @@ if [ ! -d "/srv/salt" ]; then
   sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt/client
 fi
 
-sudo -s cat > '/etc/salt/minion' << EOF
+sudo touch /etc/salt/minion_id
+sudo touch /etc/salt/minion
+sudo touch /srv/salt/top.sls
+
+sudo chmod 777 /etc/salt
+sudo chmod 777 /etc/salt/minion
+sudo chmod 777 /etc/salt/minion_id
+sudo chmod 777 /srv/salt/top.sls
+
+cat > '/etc/salt/minion' << EOF
 file_roots:
   base:
     - /srv/salt
 file_client: local
 EOF
 
-sudo chmod 644 /etc/salt/minion
-
-sudo -s cat > '/etc/salt/minion_id' << EOF
+cat > '/etc/salt/minion_id' << EOF
 id: client
 EOF
 
-sudo -s cat > '/srv/salt/top.sls' << EOF
+cat > '/srv/salt/top.sls' << EOF
 base:
   '*':
     - client
 EOF
+
+sudo chmod 755 /etc/salt
+sudo chmod 644 /etc/salt/minion
+sudo chmod 644 /etc/salt/minion_id
+sudo chmod 755 /srv/salt/top.sls
 
 if [ -d '/srv/salt' ]; then
   echo ">>> Running salt to configure machine"
