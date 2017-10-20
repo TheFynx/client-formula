@@ -53,7 +53,7 @@ else
     git clone ${client_git}
 fi
 
-if [ ! -d "${USER_HOME}/formulas/client-formula/client" ]; then
+if [ ! -d "/srv/salt" ]; then
   sudo ln -s ${USER_HOME}/formulas/client-formula /srv/salt
 fi
 
