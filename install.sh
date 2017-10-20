@@ -54,24 +54,24 @@ else
 fi
 
 if [ ! -d "/srv/salt" ]; then
-  mkdir -p /srv/salt
+  sudo mkdir -p /srv/salt
   sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt/client
 fi
 
 sudo chmod 777 /etc/salt/minion
 
-cat > '/etc/salt/minion' << EOF
+sudo cat > '/etc/salt/minion' << EOF
 file_roots:
   base:
     - /srv/salt
 file_client: local
 EOF
 
-cat > '/etc/salt/minion_id' << EOF
+sudo cat > '/etc/salt/minion_id' << EOF
 id: client
 EOF
 
-cat > '/srv/salt/top.sls' << EOF
+sudo cat > '/srv/salt/top.sls' << EOF
 base:
   '*':
     - client
