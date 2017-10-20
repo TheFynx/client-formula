@@ -61,8 +61,9 @@ sudo chmod 777 /etc/salt/minion
 
 cat > '/etc/salt/minion' << EOF
 id: client
-base:
-  - /srv/salt
+file_roots:
+  base:
+    - /srv/salt
 file_client: local
 EOF
 
