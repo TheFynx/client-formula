@@ -80,8 +80,9 @@ EOF
 
 cat > '/srv/salt/top.sls' << EOF
 base:
-  '*':
-    - client
+  'client':
+    - client.packages
+    - client.dotfiles
 EOF
 
 sudo chmod 755 /etc/salt
