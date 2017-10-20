@@ -23,21 +23,21 @@ fi
 
 
 if [[ "$platform" == "Ubuntu" ]]; then
-    sudo apt-get install -y python git
+    sudo apt-get install -y python git curl
 elif [[ "$platform" == "Debian" ]]; then
-    sudo apt-get install -y python git
+    sudo apt-get install -y python git curl
 else
     echo "No supported platform found"
 fi
 
-if [ -z $(command -v salt-call) ]; then
-    if [ -n $(command -v curl) ]; then
+if [ -z "$(command -v salt-call)" ]; then
+    if [ -n "$(command -v curl)" ]; then
         curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
         sudo sh bootstrap-salt.sh
-    elif [ -n $(command -v salt-call) ]; then
+    elif [ -n "$(command -v wget)" ]; then
         wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
         sudo sh bootstrap-salt.sh
-    elif [ -n $(command) -v python ]; then
+    elif [ -n "$(command -v python)" ]; then
         python -c 'import urllib; print urllib.urlopen("https://bootstrap.saltstack.com").read()' > bootstrap-salt.sh
         sudo sh bootstrap-salt.sh
     else
@@ -54,17 +54,27 @@ else
 fi
 
 if [ ! -d "/srv/salt" ]; then
-  sudo ln -s ${USER_HOME}/formulas/client-formula /srv/salt
+  mkdir -p /srv/salt
+  sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt/client
 fi
 
 sudo chmod 777 /etc/salt/minion
 
 cat > '/etc/salt/minion' << EOF
-id: client
 file_roots:
   base:
     - /srv/salt
 file_client: local
+EOF
+
+cat > '/etc/salt/minion_id' << EOF
+id: client
+EOF
+
+cat > '/srv/salt/top.sls' << EOF
+base:
+  '*':
+    - client
 EOF
 
 sudo chmod 644 /etc/salt/minion
