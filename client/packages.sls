@@ -10,14 +10,19 @@
 
 {% if grains['os_family'] == 'Windows' %}
 # Commented out until fix has been merged
-# {% for package in 'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8', 'virtualbox', 'rust', 'dropbox', 'visualstudiocode', 'awscli', 'golang', 'conemu', 'python', 'insomnia-rest-api-client', 'gpg4win', 'docker-for-windows', 'atom' %}
-# {{ package }}:
-  #  chocolatey.installed:
-  #  - name: {{ package }}
-# {% endfor %}
-ChocolateyPackages:
-  cmd.run:
-    - name: choco install -y googlechrome git.install 7zip.install vlc jdk8 virtualbox  dropbox awscli conemu python insomnia-rest-api-client gpg4win docker-toolbox atom everything wox
+{% for package in
+    'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8',
+    'virtualbox', 'rust', 'dropbox', 'visualstudiocode', 'awscli', 'golang',
+    'conemu', 'python', 'insomnia-rest-api-client', 'gpg4win',
+    'docker-toolbox', 'atom', 'everything', 'atom'
+%}
+{{ package }}:
+   chocolatey.installed:
+   - name: {{ package }}
+{% endfor %}
+# ChocolateyPackages:
+#   cmd.run:
+#     - name: choco install -y googlechrome git.install 7zip.install vlc jdk8 virtualbox dropbox awscli conemu python insomnia-rest-api-client gpg4win docker-toolbox atom everything wox
 {% else %}
 
 rust_ppa:
@@ -36,6 +41,22 @@ cinnamon_ppa:
     - name: cinnamon
     - refresh: True
 
+albert_ppa:
+  pkgrepo.managed:
+    - ppa: nilarimogard/webupd8
+
+  pkg.latest:
+    - name: albert
+    - refresh: True
+
+golang_ppa:
+  pkgrepo.managed:
+    - ppa: hnakamur/golang-1.9
+
+  pkg.latest:
+    - name: golang
+    - refresh: True
+
 atom_ppa:
   pkgrepo.managed:
     - ppa: webupd8team/atom
@@ -46,7 +67,8 @@ atom_ppa:
 
 client_packages:
   pkg.installed:
-    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'rustc', 'cargo', 'cinnamon']
+    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'cargo']
+
 vim_support:
   pkg.installed:
     - pkgs: ['liblua5.2-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev',

@@ -27,6 +27,9 @@ if ((Get-Command "choco.exe" -ErrorAction SilentlyContinue) -eq $null) {
 # Install Git
 C:\ProgramData\chocolatey\bin\choco.exe install -y git python saltminion
 
+# Refresh shell
+refreshenv
+
 # Create Directories
 New-Item C:\salt\srv -ItemType Directory -Force
 New-Item C:\Users\levit\formulas -ItemType Directory -Force
@@ -42,12 +45,12 @@ if ( Test-Path C:\Users\levit\formulas\client-formula ) {
 
 # Link Directories
 if (!(Test-Path C:\salt\srv\salt)) {
-    New-Item -Path C:\salt\srv\salt -ItemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
+    New-Item -Path C:\salt\srv\salt -ItemType SymbolicLink -Value C:\Users\levit\formulas\client-formula
 }
 
 # Run salt
 Set-Location -Path C:\salt\srv\salt
-salt-call --saltfile client.sls --local state.apply
+salt-call --saltfile init.sls --local state.apply
 
 # End message to indicate completion of setup
 Write-Host "`n`nClient is now configured."

@@ -53,15 +53,17 @@ else
     git clone ${client_git}
 fi
 
-sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt
+if [ ! -d "${USER_HOME}/formulas/client-formula/client" ]; then
+  sudo ln -s ${USER_HOME}/formulas/client-formula /srv/salt
+fi
 
 sudo chmod 777 /etc/salt/minion
 
 cat > '/etc/salt/minion' << EOF
+id: client
+base:
+  - /srv/salt
 file_client: local
-file_roots:
-  base:
-    - /srv/salt
 EOF
 
 sudo chmod 644 /etc/salt/minion
