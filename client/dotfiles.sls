@@ -13,7 +13,7 @@
 {{ home }}/.{{ dot }}:
   file.managed:
     - template: jinja
-    - source: salt://templates/{{ dot }}.jinja
+    - source: salt://client/templates/{{ dot }}.jinja
     - user: {{ user }}
     - group: {{ group }}
     - mode: 775
@@ -28,7 +28,7 @@
 {{ home }}/.config/terminator/config:
   file.managed:
     - template: jinja
-    - source: salt://templates/terminator.jinja
+    - source: salt://client/templates/terminator.jinja
     - user: {{ user }}
     - group: {{ group }}
     - mode: 775
@@ -39,7 +39,7 @@
 
 {{ home }}/.vimrc:
   file.managed:
-    - source: salt://templates/vimrc
+    - source: salt://client/templates/vimrc
     - target: {{ home }}/.vimrc
     - makedirs: True
 
@@ -48,7 +48,7 @@
 {{ home }}/.{{ dot }}:
   file.managed:
     - template: jinja
-    - source: salt://templates/{{ dot }}.jinja
+    - source: salt://client/templates/{{ dot }}.jinja
     - user: {{ user }}
     - group: {{ group }}
     - defaults:
@@ -59,7 +59,7 @@
 
 {{ home }}/.vimrc:
   file.managed:
-    - source: salt://templates/vimrc
+    - source: salt://client/templates/vimrc
     - target: {{ home }}/.vimrc
     - makedirs: True
 {% endif %}
