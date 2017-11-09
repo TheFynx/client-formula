@@ -41,6 +41,11 @@ if [ -d "{{ home }}/.go" ]; then
     export GOPATH="{{ home }}/.go"
 fi
 
+# set GOPATH if it exists
+if [ -d "{{ home }}/go" ]; then
+    export GOPATH="{{ home }}/go"
+fi
+
 # Add Go Bin to PATH
 if [ -d "$GOPATH/bin" ]; then
     export PATH="$PATH:$GOPATH/bin"
