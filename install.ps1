@@ -31,7 +31,7 @@ C:\ProgramData\chocolatey\bin\choco.exe install -y git python saltminion
 refreshenv
 
 # Create Directories
-New-Item C:\salt\srv -ItemType Directory -Force
+New-Item C:\salt\srv\base -ItemType Directory -Force
 New-Item C:\Users\levit\formulas -ItemType Directory -Force
 
 # Clone Repo
@@ -45,13 +45,13 @@ if ( Test-Path C:\Users\levit\formulas\client-formula ) {
 
 # Link Directories
 if (!(Test-Path C:\salt\srv\salt)) {
-    New-Item -Path C:\salt\srv\salt\client -ItemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
+    New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
 }
 
 $salt_minion = @"
 file_roots:
   base:
-    - /srv/salt
+    - /srv/salt/base
 file_client: local
 "@
 $salt_minion | Out-File -FilePath C:\salt\etc\salt\minion -Encoding ASCII
@@ -64,8 +64,7 @@ $salt_minion_id | Out-File -FilePath C:\salt\etc\salt\minion_id -Encoding ASCII
 $salt_top = @"
 base:
   '*':
-    - client.packages
-    - client.dotfiles
+    - client
 "@
 $salt_top | Out-File -FilePath C:\salt\srv\salt\top.sls -Encoding ASCII
 
