@@ -1,3 +1,3 @@
 include:
-  - packages
-  - dotfiles
+  - client.packages
+  - client.dotfiles

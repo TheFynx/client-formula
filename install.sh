@@ -54,8 +54,8 @@ else
 fi
 
 if [ ! -d "/srv/salt" ]; then
-  sudo mkdir -p /srv/salt
-  sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt/client
+  sudo mkdir -p /srv/salt/base
+  sudo ln -s ${USER_HOME}/formulas/client-formula/client /srv/salt/base/client
 fi
 
 sudo touch /etc/salt/minion_id
@@ -70,7 +70,7 @@ sudo chmod 777 /srv/salt/top.sls
 cat > '/etc/salt/minion' << EOF
 file_roots:
   base:
-    - /srv/salt
+    - /srv/salt/base
 file_client: local
 EOF
 
