@@ -34,20 +34,20 @@ refreshenv
 
 # Create Directories
 New-Item C:\salt\srv\salt\base -ItemType Directory -Force
-New-Item C:\Users\levit\formulas -ItemType Directory -Force
+New-Item C:\Users\$user\formulas -ItemType Directory -Force
 
 # Clone Repo
-if ( Test-Path C:\Users\levit\formulas\client-formula ) {
-    Set-Location -Path C:\Users\levit\formulas\client-formula
+if ( Test-Path C:\Users\$user\formulas\client-formula ) {
+    Set-Location -Path C:\Users\$user\formulas\client-formula
     git pull
 } else {
-    Set-Location -Path C:\Users\levit\formulas
+    Set-Location -Path C:\Users\$user\formulas
     git clone https://github.com/TheFynx/client-formula.git
 }
 
 # Link Directories
 if (!(Test-Path C:\salt\srv\salt\base\client)) {
-    New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
+    New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\$user\formulas\client-formula\client
 }
 
 if (!(Test-Path C:\salt\conf)) {
@@ -74,7 +74,7 @@ if (!(Test-Path C:\salt\srv\salt)) {
       - client.packages
       - client.dotfiles
   "@
-$salt_top | Out-File -FilePath C:\salt\srv\salt\top.sls -Encoding ASCII
+$salt_top | Out-File -FilePath C:\salt\srv\salt\base\top.sls -Encoding ASCII
 }
 
 if (!(Test-Path C:\salt\srv\salt\base\client)) {
@@ -83,7 +83,7 @@ if (!(Test-Path C:\salt\srv\salt\base\client)) {
   home: C:\Users\$user
   group: $user
   "@
-  $defaults | Out-File -FilePath C:\salt\srv\salt\base\client\default.yaml -Encoding ASCII
+  $defaults | Out-File -FilePath C:\salt\srv\salt\base\client\defaults.yaml -Encoding ASCII
 }
 
 # Run salt

@@ -1,1 +1,7 @@
 {% import_yaml slspath + "/defaults.yaml" as defaults_yaml %}
+
+{% set defaults = salt['pillar.get'](
+    'client',
+    default=defaults_yaml,
+    merge=True)
+%}
