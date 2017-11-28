@@ -1,5 +1,7 @@
 # Requires -Version 3.0
 
+param([Int32]$user=levit)
+
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
 [Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Warning "Script requires Admin Privileges.`nPlease re-run this script as an Administrator."
@@ -31,7 +33,7 @@ C:\ProgramData\chocolatey\bin\choco.exe install -y git python saltminion
 refreshenv
 
 # Create Directories
-New-Item C:\salt\srv\base -ItemType Directory -Force
+New-Item C:\salt\srv\salt\base -ItemType Directory -Force
 New-Item C:\Users\levit\formulas -ItemType Directory -Force
 
 # Clone Repo
@@ -51,7 +53,7 @@ if (!(Test-Path C:\salt\srv\salt)) {
 $salt_minion = @"
 file_roots:
   base:
-    - /srv/salt/base
+    - C:\salt\srv\salt\base
 file_client: local
 "@
 $salt_minion | Out-File -FilePath C:\salt\conf\minion -Encoding ASCII
@@ -68,6 +70,13 @@ base:
     - client.dotfiles
 "@
 $salt_top | Out-File -FilePath C:\salt\srv\salt\top.sls -Encoding ASCII
+
+$defaults = @'
+user: $user
+home: C:\Users\$user
+group: $user
+'@
+$defaults | Out-File -FilePath C:\salt\srv\salt\base\client\default.yaml -Encoding ASCII
 
 # Run salt
 Set-Location -Path C:\salt\srv\salt

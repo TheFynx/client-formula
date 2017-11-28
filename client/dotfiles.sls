@@ -1,12 +1,4 @@
-{% if grains['os_family'] == 'Debian' %}
-{% set user = salt['pillar.get']('client:user', 'levi') %}
-{% set group = salt['pillar.get']('client:group', 'levi') %}
-{% set home = salt['pillar.get']('client:home', '/home/levi') %}
-{% elif grains['os_family'] == 'Windows' %}
-{% set user = salt['pillar.get']('client:user', 'levit') %}
-{% set group = salt['pillar.get']('client:group', 'levit') %}
-{% set home = salt['pillar.get']('client:home', '/Users/levit') %}
-{% endif %}
+{% from slspath + "/map.jinja" import defaults with context %}
 
 {% if grains['os_family'] == 'Debian' %}
 {% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile' %}
