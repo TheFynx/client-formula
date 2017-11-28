@@ -82,7 +82,6 @@ if (!(Test-Path C:\salt\srv\salt)) {
 
 $defaults = @"
 user: "$user"
-home: "C:\Users\$user"
 group: "$user"
 "@
 

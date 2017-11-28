@@ -2,6 +2,18 @@
 
 set -o nounset -o pipefail
 
+USER='levi'
+GROUP='levi'
+
+while getopts u:g: option
+do
+ case "${option}"
+ in
+ u) USER=${OPTARG};;
+ g) GROUP=${OPTARG};;
+ esac
+done
+
 # dotFile config
 client_git="https://github.com/TheFynx/client-formula.git"
 
@@ -83,6 +95,11 @@ base:
   '*':
     - client.packages
     - client.dotfiles
+EOF
+
+cat > '/srv/salt/base/client/defaults.yaml' << EOF
+user: $USER
+group: $GROUP
 EOF
 
 sudo chmod 755 /etc/salt

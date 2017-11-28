@@ -6,8 +6,8 @@
     'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8',
     'dropbox', 'awscli', 'golang', 'conemu', 'python', 'python3', 'wox', 'ditto',
     'insomnia-rest-api-client', 'gpg4win', 'docker-for-windows', 'ruby',
-    'everything', 'atom', 'firefox', 'golang', 'gotomeeting', 'greenshot',
-    'keepass', 'simplenote', 'openvpn', 'packer', 'terraform', 'slack', 'vagrant'
+    'everything', 'atom', 'firefox', 'gotomeeting', 'greenshot', 'keepass',
+    'simplenote', 'openvpn', 'packer', 'terraform', 'slack', 'vagrant'
 %}
 
 {{ package }}:
