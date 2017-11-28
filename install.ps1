@@ -46,40 +46,47 @@ if ( Test-Path C:\Users\levit\formulas\client-formula ) {
 }
 
 # Link Directories
-if (!(Test-Path C:\salt\srv\salt)) {
+if (!(Test-Path C:\salt\srv\salt\base\client)) {
     New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\levit\formulas\client-formula\client
 }
 
-$salt_minion = @"
-file_roots:
+if (!(Test-Path C:\salt\conf)) {
+  $salt_minion = @"
+  file_roots:
+    base:
+      - C:\salt\srv\salt\base
+  file_client: local
+  "@
+  $salt_minion | Out-File -FilePath C:\salt\conf\minion -Encoding ASCII
+}
+
+if (!(Test-Path C:\salt\conf\minion_id)) {
+  $salt_minion_id = @"
+  id: client
+  "@
+  $salt_minion_id | Out-File -FilePath C:\salt\conf\minion_id -Encoding ASCII
+}
+
+if (!(Test-Path C:\salt\srv\salt)) {
+  $salt_top = @"
   base:
-    - C:\salt\srv\salt\base
-file_client: local
-"@
-$salt_minion | Out-File -FilePath C:\salt\conf\minion -Encoding ASCII
-
-$salt_minion_id = @"
-id: client
-"@
-$salt_minion_id | Out-File -FilePath C:\salt\conf\minion_id -Encoding ASCII
-
-$salt_top = @"
-base:
-  '*':
-    - client.packages
-    - client.dotfiles
-"@
+    '*':
+      - client.packages
+      - client.dotfiles
+  "@
 $salt_top | Out-File -FilePath C:\salt\srv\salt\top.sls -Encoding ASCII
+}
 
-$defaults = @'
-user: $user
-home: C:\Users\$user
-group: $user
-'@
-$defaults | Out-File -FilePath C:\salt\srv\salt\base\client\default.yaml -Encoding ASCII
+if (!(Test-Path C:\salt\srv\salt\base\client)) {
+  $defaults = @"
+  user: $user
+  home: C:\Users\$user
+  group: $user
+  "@
+  $defaults | Out-File -FilePath C:\salt\srv\salt\base\client\default.yaml -Encoding ASCII
+}
 
 # Run salt
-Set-Location -Path C:\salt\srv\salt
 salt-call state.apply
 
 # End message to indicate completion of setup
