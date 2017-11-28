@@ -62,4 +62,10 @@
     - source: salt://client/templates/vimrc
     - target: {{ home }}/.vimrc
     - makedirs: True
+
+{{ home }}/AppData/Roaming/ConEmu.xml:
+  file.managed:
+    - source: salt://client/templates/conemu.xml.jinja
+    - target: {{ home }}/AppData/Roaming/ConEmu.xml
+    - makedirs: True
 {% endif %}

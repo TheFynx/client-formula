@@ -12,10 +12,12 @@
 # Commented out until fix has been merged
 {% for package in
     'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8',
-    'virtualbox', 'rust', 'dropbox', 'visualstudiocode', 'awscli', 'golang',
-    'conemu', 'python', 'insomnia-rest-api-client', 'gpg4win',
-    'docker-toolbox', 'atom', 'everything', 'atom'
+    'dropbox', 'awscli', 'golang', 'conemu', 'python', 'python3', 'wox', 'ditto',
+    'insomnia-rest-api-client', 'gpg4win', 'docker-for-windows', 'atom', 'ruby',
+    'everything', 'atom', 'firefox', 'golang', 'gotomeeting', 'greenshot',
+    'keepass', 'simplenote', 'openvpn', 'packer', 'terraform', 'slack', 'vagrant'
 %}
+
 {{ package }}:
    chocolatey.installed:
    - name: {{ package }}
@@ -67,7 +69,7 @@ atom_ppa:
 
 client_packages:
   pkg.installed:
-    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'chromium-browser', 'docker', 'vagrant', 'cargo']
+    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'docker', 'vagrant', 'cargo', 'vlc']
 
 vim_support:
   pkg.installed:

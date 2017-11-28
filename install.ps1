@@ -64,7 +64,8 @@ $salt_minion_id | Out-File -FilePath C:\salt\etc\salt\minion_id -Encoding ASCII
 $salt_top = @"
 base:
   '*':
-    - client
+    - client.packages
+    - client.dotfiles
 "@
 $salt_top | Out-File -FilePath C:\salt\srv\salt\top.sls -Encoding ASCII
 
