@@ -52,6 +52,11 @@ if (!(Test-Path C:\salt\srv\salt\base\client)) {
     New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\$user\formulas\client-formula\client
 }
 
+# Set ACLs
+$UserACL  = Get-Acl -Path "C:\Users\$user\Desktop"
+Set-Acl -Path "C:\salt\" -AclObject $UserACL
+Get-ChildItem -Path "C:\salt\" -Recurse -Force | Set-Acl -AclObject $UserACL
+
 $salt_minion = @"
 file_roots:
   base:
