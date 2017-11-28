@@ -2,62 +2,62 @@
 
 {% if grains['os_family'] == 'Debian' %}
 {% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile' %}
-/home/{{ user }}/.{{ dot }}:
+/home/{{ defaults.user }}/.{{ dot }}:
   file.managed:
     - template: jinja
     - source: salt://client/templates/{{ dot }}.jinja
-    - user: {{ user }}
-    - group: {{ group }}
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - mode: 775
     - defaults:
-        home: /home/{{ user }}
+        home: /home/{{ defaults.user }}
         os: {{ grains['os_family'] }}
         gpgkey: false
     - makedirs: True
 
 {% endfor %}
 
-/home/{{ user }}/.config/terminator/config:
+/home/{{ defaults.user }}/.config/terminator/config:
   file.managed:
     - template: jinja
     - source: salt://client/templates/terminator.jinja
-    - user: {{ user }}
-    - group: {{ group }}
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - mode: 775
     - defaults:
-        home: /home/{{ user }}
+        home: /home/{{ defaults.user }}
         os: {{ grains['os_family'] }}
     - makedirs: True
 
-/home/{{ user }}/.vimrc:
+/home/{{ defaults.user }}/.vimrc:
   file.managed:
     - source: salt://client/templates/vimrc
-    - target: /home/{{ user }}/.vimrc
+    - target: /home/{{ defaults.user }}/.vimrc
     - makedirs: True
 
 {% elif grains['os_family'] == 'Windows' %}
 {% for dot in 'aliases', 'bash_profile', 'bashrc', 'exports', 'functions', 'gitconfig', 'gitignore', 'path', 'profile' %}
-C:\Users\{{ user }}/.{{ dot }}:
+C:\Users\{{ defaults.user }}/.{{ dot }}:
   file.managed:
     - template: jinja
     - source: salt://client/templates/{{ dot }}.jinja
-    - user: {{ user }}
-    - group: {{ group }}
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - defaults:
-        home: C:\Users\{{ user }}
+        home: C:\Users\{{ defaults.user }}
         os: {{ grains['os_family'] }}
     - makedirs: True
 {% endfor %}
 
-C:\Users\{{ user }}/.vimrc:
+C:\Users\{{ defaults.user }}/.vimrc:
   file.managed:
     - source: salt://client/templates/vimrc
-    - target: C:\Users\{{ user }}/.vimrc
+    - target: C:\Users\{{ defaults.user }}/.vimrc
     - makedirs: True
 
-C:\Users\{{ user }}/AppData/Roaming/ConEmu.xml:
+C:\Users\{{ defaults.user }}/AppData/Roaming/ConEmu.xml:
   file.managed:
     - source: salt://client/templates/conemu.xml.jinja
-    - target: C:\Users\{{ user }}/AppData/Roaming/ConEmu.xml
+    - target: C:\Users\{{ defaults.user }}/AppData/Roaming/ConEmu.xml
     - makedirs: True
 {% endif %}

@@ -102,11 +102,11 @@ install_vim:
             --prefix=/usr \
         make VIMRUNTIMEDIR=/usr/share/vim/vim80 &&\
         make install &&\
-        touch {{ home }}/.local/.vim_built
+        touch /home/{{ defaults.user }}/.local/.vim_built
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
-    - unless: test -f {{ home }}/.local/.vim_built
+    - unless: test -f /home/{{ defaults.user }}/.local/.vim_built
 
 install_exa:
   cmd.run:
@@ -114,7 +114,7 @@ install_exa:
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
-    - unless: test -x {{ home }}/.cargo/bin/exa
+    - unless: test -x /home/{{ defaults.user }}/.cargo/bin/exa
 
 
 install_fonts:
@@ -126,18 +126,18 @@ install_fonts:
         cd .. &&\
         rm -rf fonts
     - cwd: /tmp
-    - runas: {{ user }}
+    - runas: {{ defaults.user }}
     - shell: /bin/bash
     - timeout: 300
-    - unless: test -x {{ home }}/.local/share/fonts
+    - unless: test -x /home/{{ defaults.user }}/.local/share/fonts
 
 install_bash_it:
   cmd.run:
     - name: |
-        git clone --depth=1 https://github.com/Bash-it/bash-it.git {{ home }}/.bash_it &&\
-        {{ home }}/.bash_it/install.sh -s
+        git clone --depth=1 https://github.com/Bash-it/bash-it.git /home/{{ defaults.user }}/.bash_it &&\
+        /home/{{ defaults.user }}/.bash_it/install.sh -s
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
-    - unless: test -x {{ home }}/.bash_it/install.sh
+    - unless: test -x /home/{{ defaults.user }}/.bash_it/install.sh
 {% endif %}
