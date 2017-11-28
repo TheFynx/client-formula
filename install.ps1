@@ -37,6 +37,7 @@ New-Item C:\salt\srv\salt\base -ItemType Directory -Force
 New-Item C:\Users\$user\formulas -ItemType Directory -Force
 
 # Clone Repo
+Write-Host "Getting Client Salt Formula"
 if ( Test-Path C:\Users\$user\formulas\client-formula ) {
     Set-Location -Path C:\Users\$user\formulas\client-formula
     git pull
@@ -47,6 +48,7 @@ if ( Test-Path C:\Users\$user\formulas\client-formula ) {
 
 # Link Directories
 if (!(Test-Path C:\salt\srv\salt\base\client)) {
+  Write-Host "Linking Directories"
     New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\$user\formulas\client-formula\client
 }
 
@@ -58,6 +60,7 @@ file_client: local
 "@
 
 if (Test-Path C:\salt\conf) {
+  Write-Host "Setting minion config"
   $salt_minion | Out-File -FilePath C:\salt\conf\minion -Encoding ASCII
 }
 
@@ -65,7 +68,8 @@ $salt_minion_id = @"
 id: client
 "@
 
-if (!(Test-Path C:\salt\conf\minion_id)) {
+if (Test-Path C:\salt\conf\minion_id) {
+  Write-Host "Setting minion id"
   $salt_minion_id | Out-File -FilePath C:\salt\conf\minion_id -Encoding ASCII
 }
 
@@ -77,6 +81,7 @@ base:
 "@
 
 if (Test-Path C:\salt\srv\salt) {
+  Write-Host "Creating Top File"
   $salt_top | Out-File -FilePath C:\salt\srv\salt\base\top.sls -Encoding ASCII
 }
 
@@ -86,6 +91,7 @@ group: "$user"
 "@
 
 if (Test-Path C:\salt\srv\salt\base\client) {
+  Write-Host "Creating Defaults file"
   $defaults | Out-File -FilePath C:\salt\srv\salt\base\client\defaults.yaml -Encoding ASCII
 }
 
