@@ -54,12 +54,12 @@ file_roots:
     - /srv/salt/base
 file_client: local
 "@
-$salt_minion | Out-File -FilePath C:\salt\etc\salt\minion -Encoding ASCII
+$salt_minion | Out-File -FilePath C:\salt\conf\minion -Encoding ASCII
 
 $salt_minion_id = @"
 id: client
 "@
-$salt_minion_id | Out-File -FilePath C:\salt\etc\salt\minion_id -Encoding ASCII
+$salt_minion_id | Out-File -FilePath C:\salt\conf\minion_id -Encoding ASCII
 
 $salt_top = @"
 base:
