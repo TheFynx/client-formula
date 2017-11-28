@@ -1,6 +1,6 @@
 # Requires -Version 3.0
 
-param([Int32]$user=levit)
+$user=$args[0]
 
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
 [Security.Principal.WindowsBuiltInRole] "Administrator")) {

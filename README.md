@@ -6,6 +6,8 @@ Salt Formula to setup my Client/Workstation and DotFiles
 
 ### Powershell
 * `iwr https://raw.githubusercontent.com/TheFynx/client-forumla/master/install.ps1 -UseBasicParsing | iex`
+or w/ custom user
+* `iwr https://raw.githubusercontent.com/TheFynx/client-forumla/master/install.ps1 user_name -UseBasicParsing | iex`
 
 ### Bash/Shell
 * `curl https://raw.githubusercontent.com/TheFynx/client-forumla/master/install.sh | bash`
