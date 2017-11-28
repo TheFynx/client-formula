@@ -50,40 +50,44 @@ if (!(Test-Path C:\salt\srv\salt\base\client)) {
     New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\$user\formulas\client-formula\client
 }
 
-if (!(Test-Path C:\salt\conf)) {
 $salt_minion = @"
 file_roots:
   base:
     - C:\salt\srv\salt\base
 file_client: local
 "@
-$salt_minion | Out-File -FilePath C:\salt\conf\minion -Encoding ASCII
+
+if (!(Test-Path C:\salt\conf)) {
+  $salt_minion | Out-File -FilePath C:\salt\conf\minion -Encoding ASCII
 }
 
-if (!(Test-Path C:\salt\conf\minion_id)) {
 $salt_minion_id = @"
 id: client
 "@
-$salt_minion_id | Out-File -FilePath C:\salt\conf\minion_id -Encoding ASCII
+
+if (!(Test-Path C:\salt\conf\minion_id)) {
+  $salt_minion_id | Out-File -FilePath C:\salt\conf\minion_id -Encoding ASCII
 }
 
-if (!(Test-Path C:\salt\srv\salt)) {
 $salt_top = @"
 base:
   '*':
     - client.packages
     - client.dotfiles
 "@
-$salt_top | Out-File -FilePath C:\salt\srv\salt\base\top.sls -Encoding ASCII
+
+if (!(Test-Path C:\salt\srv\salt)) {
+  $salt_top | Out-File -FilePath C:\salt\srv\salt\base\top.sls -Encoding ASCII
 }
 
-if (!(Test-Path C:\salt\srv\salt\base\client)) {
 $defaults = @"
 user: $user
 home: C:\Users\$user
 group: $user
 "@
-$defaults | Out-File -FilePath C:\salt\srv\salt\base\client\defaults.yaml -Encoding ASCII
+
+if (!(Test-Path C:\salt\srv\salt\base\client)) {
+  $defaults | Out-File -FilePath C:\salt\srv\salt\base\client\defaults.yaml -Encoding ASCII
 }
 
 # Run salt
