@@ -57,7 +57,7 @@ file_roots:
 file_client: local
 "@
 
-if (!(Test-Path C:\salt\conf)) {
+if (Test-Path C:\salt\conf) {
   $salt_minion | Out-File -FilePath C:\salt\conf\minion -Encoding ASCII
 }
 
@@ -76,7 +76,7 @@ base:
     - client.dotfiles
 "@
 
-if (!(Test-Path C:\salt\srv\salt)) {
+if (Test-Path C:\salt\srv\salt) {
   $salt_top | Out-File -FilePath C:\salt\srv\salt\base\top.sls -Encoding ASCII
 }
 
@@ -85,7 +85,7 @@ user: "$user"
 group: "$user"
 "@
 
-if (!(Test-Path C:\salt\srv\salt\base\client)) {
+if (Test-Path C:\salt\srv\salt\base\client) {
   $defaults | Out-File -FilePath C:\salt\srv\salt\base\client\defaults.yaml -Encoding ASCII
 }
 
