@@ -72,12 +72,10 @@ fi
 
 sudo touch /etc/salt/minion_id
 sudo touch /etc/salt/minion
-sudo touch /srv/salt/top.sls
 
 sudo chmod 777 /etc/salt
 sudo chmod 777 /etc/salt/minion
 sudo chmod 777 /etc/salt/minion_id
-sudo chmod 777 /srv/salt/top.sls
 
 cat > '/etc/salt/minion' << EOF
 file_roots:
@@ -90,7 +88,7 @@ cat > '/etc/salt/minion_id' << EOF
 id: client
 EOF
 
-cat > '/srv/salt/top.sls' << EOF
+cat > '/srv/salt/base/top.sls' << EOF
 base:
   '*':
     - client.packages
