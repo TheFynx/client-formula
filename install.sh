@@ -87,7 +87,7 @@ EOF
 sudo chmod 755 /etc/salt
 sudo chmod 644 /etc/salt/minion
 sudo chmod 644 /etc/salt/minion_id
-sudo chmod 755 /srv/salt/top.sls
+sudo chmod 755 /srv/salt/base/top.sls
 
 if [ -d '/srv/salt' ]; then
     echo ">>> Running salt to configure machine"
