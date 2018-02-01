@@ -11,6 +11,7 @@ desktop-effects-unmaximize-time=100
 desktop-effects-map-time=175
 desktop-effects-minimize-effect='traditional'
 desktop-effects=false
+panels-height=['1:25']
 enable-vfade=false
 next-applet-id=14
 panel-launchers=['DEPRECATED']
@@ -35,8 +36,12 @@ favorite-apps=['chromium-browser.desktop', 'terminator.desktop', 'cinnamon-setti
 desktop-effects-tile-time=100
 startup-animation=false
 
+[org/cinnamon/settings-daemon/plugins/power]
+sleep-display-ac=2700
+
 [org/cinnamon/settings-daemon/peripherals/touchpad]
 motion-threshold=1
+natural-scroll=false
 scrolling-method=1
 
 [org/cinnamon/settings-daemon/peripherals/keyboard]
@@ -49,6 +54,11 @@ drag-threshold=8
 motion-threshold=1
 double-click=400
 
+[org/cinnamon/muffin]
+resize-threshold=24
+tile-hud-threshold=25
+workspace-cycle=true
+
 [org/cinnamon/sounds]
 login-enabled=false
 logout-enabled=false
@@ -56,11 +66,6 @@ unplug-enabled=false
 tile-enabled=false
 plug-enabled=false
 switch-enabled=false
-
-[org/cinnamon/muffin]
-resize-threshold=24
-tile-hud-threshold=25
-workspace-cycle=true
 
 [org/cinnamon/desktop/interface]
 clock-show-date=true
@@ -73,12 +78,17 @@ toolkit-accessibility=false
 
 [org/cinnamon/desktop/keybindings/media-keys]
 terminal=['<Super>t']
+www=['XF86WWW', '<Primary><Super>w']
+calculator=['XF86Calculator', '<Primary><Super>c']
 
 [org/cinnamon/desktop/media-handling]
 autorun-never=false
 
 [org/cinnamon/desktop/screensaver]
 screensaver-name=''
+use-custom-format=false
+show-album-art=false
+xscreensaver-hack='anemotaxis'
 
 [org/cinnamon/desktop/applications/terminal]
 exec='terminator'
@@ -88,7 +98,10 @@ fade-opacity=40
 remove-old=true
 
 [org/cinnamon/desktop/session]
-idle-delay=uint32 0
+idle-delay=uint32 3600
+
+[org/cinnamon/desktop/privacy]
+recent-files-max-age=-1
 
 [org/cinnamon/desktop/wm/preferences]
 min-window-opacity=30
@@ -122,3 +135,35 @@ name='Mint-Y-Dark'
 
 [org/cinnamon/cinnamon-session]
 quit-time-delay=60
+
+[org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+use-theme-transparency=false
+
+[org/gnome/terminal/legacy]
+schema-version=uint32 3
+
+[org/gnome/nm-applet]
+disable-connected-notifications=true
+
+[org/gnome/desktop/a11y/applications]
+screen-keyboard-enabled=false
+screen-reader-enabled=false
+
+[org/gnome/desktop/a11y/mouse]
+secondary-click-enabled=false
+secondary-click-time=1.2
+dwell-time=1.2
+dwell-threshold=10
+dwell-click-enabled=false
+
+[org/gnome/desktop/interface]
+toolkit-accessibility=false
+
+[org/gtk/settings/color-chooser]
+selected-color=(true, 0.1803921568627451, 0.20392156862745098, 0.21176470588235294, 1.0)
+
+[org/x/editor/preferences/ui]
+statusbar-visible=true
+
+[org/nemo/desktop]
+desktop-layout='false::false'

@@ -57,7 +57,11 @@ atom_ppa:
     - name: atom
     - refresh: True
 
-{% for pkg in 'vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common', 'firefox', 'thunderbird', 'tomboy', 'docker', 'docker-engine', 'docker.io' %}
+{% for pkg in
+  'vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common', 'firefox',
+  'thunderbird', 'tomboy', 'docker', 'docker-engine', 'docker.io', 'hexchat',
+  'pidgin', 'redshift', 'timeshift', 'rhythmbox', 'transmission-gtk'
+%}
 {{ pkg }}:
   pkg.removed
 {% endfor %}

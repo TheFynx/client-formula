@@ -1,6 +1,5 @@
 {% from slspath + "/map.jinja" import defaults with context %}
 
-
 /home/{{ defaults.user }}/custom/dconf.settings:
   file.managed:
     - template: jinja
@@ -15,3 +14,9 @@ load_dconf:
     - name: dconf load / < /home/{{ defaults.user }}/custom/dconf.settings
     - onchanges:
       - file: /home/{{ defaults.user }}/custom/dconf.settings
+
+Copy Cinnamon Config:
+  file.recurse:
+    - name: /home/{{ defaults.user }}/.cinnamon/configs/
+    - source: salt://client/files/
+    - mkdirs: true
