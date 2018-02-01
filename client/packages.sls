@@ -1,7 +1,6 @@
 {% from slspath + "/map.jinja" import defaults with context %}
 
 {% if grains['os_family'] == 'Windows' %}
-# Commented out until fix has been merged
 {% for package in
     'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8',
     'dropbox', 'awscli', 'golang', 'conemu', 'python', 'python3', 'wox', 'ditto',
@@ -14,10 +13,17 @@
    chocolatey.installed:
    - name: {{ package }}
 {% endfor %}
-# ChocolateyPackages:
-#   cmd.run:
-#     - name: choco install -y googlechrome git.install 7zip.install vlc jdk8 virtualbox dropbox awscli conemu python insomnia-rest-api-client gpg4win docker-toolbox atom everything wox
+
 {% else %}
+
+docker_repo:
+  pkgrepo.managed:
+    - humanname: 'Docker CE'
+    - name: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable'
+    - file: '/etc/apt/sources.list.d/docker.list'
+    - key_url: 'https://download.docker.com/linux/ubuntu/gpg'
+    - require_in:
+      - pkg: docker
 
 rust_ppa:
   pkgrepo.managed:
@@ -25,14 +31,6 @@ rust_ppa:
 
   pkg.latest:
     - name: rustc
-    - refresh: True
-
-cinnamon_ppa:
-  pkgrepo.managed:
-    - ppa: embrosyn/cinnamon
-
-  pkg.latest:
-    - name: cinnamon
     - refresh: True
 
 albert_ppa:
@@ -59,20 +57,21 @@ atom_ppa:
     - name: atom
     - refresh: True
 
+{% for pkg in 'vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common', 'firefox', 'thunderbird', 'tomboy', 'docker', 'docker-engine', 'docker.io' %}
+{{ pkg }}:
+  pkg.removed
+{% endfor %}
+
+
 client_packages:
   pkg.installed:
-    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'docker', 'vagrant', 'cargo', 'vlc']
+    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'docker-ce', 'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit']
 
 vim_support:
   pkg.installed:
     - pkgs: ['liblua5.2-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev',
              'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev',
              'cmake', 'libxt-dev', 'libbonoboui2-dev', 'python3-dev', 'libperl-dev', 'lua5.2', 'build-essential']
-
-{% for pkg in 'vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common' %}
-{{ pkg }}:
-  pkg.removed
-{% endfor %}
 
 install_pygments:
   pip.installed:
