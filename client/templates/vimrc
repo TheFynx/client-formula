@@ -55,8 +55,7 @@
     set wildignore+=*.pyc
     set wildignore+=*.DS_Store
     " }}}
-
-"" ==================== }}}
+"" ==============
 "  Vundle Bundles {{{1
 "" ==============
 
@@ -99,10 +98,10 @@
     " Testing Bundles
 
     filetype plugin indent on
-
-"" =============== }}}
+    " }}}
+"" ==============
 "  Filetype Association {{{1
-"" ====================
+"" ===============
 
     au BufRead,BufNewFile *vimrc set foldmethod=marker
 
@@ -128,11 +127,10 @@
         autocmd!
         autocmd BufEnter *.patch,*.rej,*.diff syntax enable
     augroup end
-
-
-"" ============= }}}
+    " }}}
+"" ===============
 "  Look and Feel {{{1
-"" =============
+"" ===============
     " Basics / Misc {{{2
     " -------------
 
@@ -231,7 +229,7 @@
                    \|     exe "normal! g`\""
                    \|  endif
     " }}}
-"" ============== }}}
+"" ===============
 "  Plugin Settings {{{1
 "" ===============
     " Airline Settings {{{2
@@ -268,9 +266,10 @@
         let g:notes_title_sync='change_title'
         let g:notes_smart_quotes = 0
     " }}}
-"" ======== }}}
+" }}}
+"" ===============
 "  Mappings {{{1
-"" ========
+"" ===============
     " Disable Q (Command Shell Mode) {{{2
     " ------------------------------
         nnoremap Q <nop>
@@ -371,10 +370,10 @@
         endfunction
         nmap <leader>p :call TogglePaste()<CR>
     " }}}
-"" ========================= }}}
-"" ========================= }}}
+" }}}
+"" ===============
 "  Performance Optimizations {{{1
-"" =========================
+"" ===============
 
     " Fast terminal connections
     set ttyfast
@@ -393,6 +392,12 @@
     silent! source ./.vimrc.local
     " Remap mappings that get overwritten by plugins
     set rtp+=~/.vim/after/
+"" }}}
+"" ==============
+"  VIM Exit Commands {{{1
+"" ==============
+    "Set non-bracketed paste on exit"
+    autocmd VimLeave * :!printf "\e[?2004l"
 "" }}}
 "" ==============
 
