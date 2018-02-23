@@ -30,7 +30,7 @@ if [[ -n "$(command -v apt-get)" ]]; then
     sudo apt-get install -y python git curl wget
     if [[ -z "$(command -v salt-call)" ]]; then
         wget -O - https://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
-        sudo echo "deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest xenial main" | sudo tee /etc/apt/sources.list.d/saltstack.list
+        echo "deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest xenial main" | sudo tee /etc/apt/sources.list.d/saltstack.list
         sudo apt update && sudo apt install salt-minion
     fi
 elif [[ -n "$(command -v yum)" ]]; then
@@ -59,6 +59,7 @@ sudo touch /etc/salt/minion
 sudo chmod 777 /etc/salt
 sudo chmod 777 /etc/salt/minion
 sudo chmod 777 /etc/salt/minion_id
+sudo chmod 777 /srv/salt/base/top.sls
 
 cat > '/etc/salt/minion' << EOF
 file_roots:
