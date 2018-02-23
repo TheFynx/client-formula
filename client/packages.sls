@@ -4,14 +4,14 @@
 {% for package in
     'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8',
     'dropbox', 'awscli', 'golang', 'conemu', 'python', 'python3', 'wox', 'ditto',
-    'insomnia-rest-api-client', 'gpg4win', 'docker-for-windows', 'ruby',
+    'insomnia-rest-api-client', 'gpg4win', 'docker-for-windows', 'ruby', neovim,
     'everything', 'atom', 'firefox', 'gotomeeting', 'greenshot', 'keepass',
     'simplenote', 'openvpn', 'packer', 'terraform', 'slack', 'vagrant'
 %}
 
 {{ package }}:
    chocolatey.installed:
-   - name: {{ package }}
+     - name: {{ package }}
 {% endfor %}
 
 {% else %}
@@ -33,14 +33,6 @@ rust_ppa:
     - name: rustc
     - refresh: True
 
-albert_ppa:
-  pkgrepo.managed:
-    - ppa: nilarimogard/webupd8
-
-  pkg.latest:
-    - name: albert
-    - refresh: True
-
 golang_ppa:
   pkgrepo.managed:
     - ppa: longsleep/golang-backports
@@ -49,11 +41,11 @@ golang_ppa:
     - name: golang-go
     - refresh: True
 
-golang_ppa:
+neovim_ppa:
   pkgrepo.managed:
     - ppa: neovim-ppa/stable
 
-pkg.latest:
+  pkg.latest:
     - name: neovim
     - refresh: True
 
@@ -77,12 +69,18 @@ atom_ppa:
 
 client_packages:
   pkg.installed:
-    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'docker-ce', 'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit',
-             'python-dev', 'python-pip', 'python3-dev', 'python3-pip']
+    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'docker-ce',
+             'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit',
+             'python-dev', 'python3-dev', 'python3-pip', 'ncurses-dev',
+             'libtolua-dev', 'exuberant-ctags', 'pandoc', 'lynx']
 
 install_pygments:
   pip.installed:
     - name: pygments
+
+install_jinja2:
+  pip.installed:
+    - name: Jinja2
 
 install_exa:
   cmd.run:
