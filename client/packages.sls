@@ -4,14 +4,14 @@
 {% for package in
     'googlechrome', 'adobereader', 'git.install', '7zip.install', 'vlc', 'jdk8',
     'dropbox', 'awscli', 'golang', 'conemu', 'python', 'python3', 'wox', 'ditto',
-    'insomnia-rest-api-client', 'gpg4win', 'docker-for-windows', 'ruby',
+    'insomnia-rest-api-client', 'gpg4win', 'docker-for-windows', 'ruby', neovim,
     'everything', 'atom', 'firefox', 'gotomeeting', 'greenshot', 'keepass',
     'simplenote', 'openvpn', 'packer', 'terraform', 'slack', 'vagrant'
 %}
 
 {{ package }}:
    chocolatey.installed:
-   - name: {{ package }}
+     - name: {{ package }}
 {% endfor %}
 
 {% else %}
@@ -33,20 +33,20 @@ rust_ppa:
     - name: rustc
     - refresh: True
 
-albert_ppa:
-  pkgrepo.managed:
-    - ppa: nilarimogard/webupd8
-
-  pkg.latest:
-    - name: albert
-    - refresh: True
-
 golang_ppa:
   pkgrepo.managed:
-    - ppa: hnakamur/golang-1.9
+    - ppa: longsleep/golang-backports
 
   pkg.latest:
-    - name: golang
+    - name: golang-go
+    - refresh: True
+
+neovim_ppa:
+  pkgrepo.managed:
+    - ppa: neovim-ppa/stable
+
+  pkg.latest:
+    - name: neovim
     - refresh: True
 
 atom_ppa:
@@ -69,47 +69,18 @@ atom_ppa:
 
 client_packages:
   pkg.installed:
-    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'docker-ce', 'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit']
-
-vim_support:
-  pkg.installed:
-    - pkgs: ['liblua5.2-dev', 'luajit', 'libluajit-5.1-2', 'zlib1g-dev', 'python-dev', 'ruby-dev',
-             'libperl-dev', 'libncurses5-dev', 'libatk1.0-dev', 'libx11-dev', 'libxpm-dev', 'libxt-dev',
-             'cmake', 'libxt-dev', 'libbonoboui2-dev', 'python3-dev', 'libperl-dev', 'lua5.2', 'build-essential']
+    - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'docker-ce',
+             'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit',
+             'python-dev', 'python3-dev', 'python3-pip', 'ncurses-dev',
+             'libtolua-dev', 'exuberant-ctags', 'pandoc', 'lynx']
 
 install_pygments:
   pip.installed:
     - name: pygments
 
-install_vim:
-  cmd.run:
-    - name: |
-        if [ -d "/tmp/vim" ]; then rm -rf /tmp/vim; fi &&\
-        if [ -d "/usr/bin/vim" ]; then rm /usr/bin/vim; fi &&\
-        if [ ! -d "/usr/include/lua" ]; then ln -s /usr/include/lua5.2 /usr/include/lua && ln -s /usr/lib/x86_64-linux-gnu/liblua5.2.so /usr/local/lib/liblua.so; fi &&\
-        cd /tmp &&\
-        git clone https://github.com/vim/vim &&\
-        cd vim &&\
-        ./configure --with-features=huge \
-            --enable-multibyte \
-            --enable-rubyinterp \
-            --enable-pythoninterp \
-            --with-python-config-dir=$(python-config --configdir) \
-            --enable-python3interp \
-            --with-python3-config-dir=$(python3-config --configdir) \
-            --enable-perlinterp \
-            --enable-luainterp \
-            --with-lua-prefix=/usr/include/lua5.2 \
-            --enable-gui=no \
-            --enable-cscope \
-            --prefix=/usr \
-        make VIMRUNTIMEDIR=/usr/share/vim/vim80 &&\
-        make install &&\
-        touch /home/{{ defaults.user }}/.local/.vim_built
-    - cwd: /tmp
-    - shell: /bin/bash
-    - timeout: 300
-    - unless: test -f /home/{{ defaults.user }}/.local/.vim_built
+install_jinja2:
+  pip.installed:
+    - name: Jinja2
 
 install_exa:
   cmd.run:
@@ -118,7 +89,6 @@ install_exa:
     - shell: /bin/bash
     - timeout: 300
     - unless: test -x /home/{{ defaults.user }}/.cargo/bin/exa
-
 
 install_fonts:
   cmd.run:
