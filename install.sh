@@ -59,6 +59,7 @@ sudo touch /etc/salt/minion
 sudo chmod 777 /etc/salt
 sudo chmod 777 /etc/salt/minion
 sudo chmod 777 /etc/salt/minion_id
+sudo chmod 777 /srv/salt/base/top.sls
 
 cat > '/etc/salt/minion' << EOF
 file_roots:
