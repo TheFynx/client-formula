@@ -20,10 +20,10 @@
   " Easy Window Switching
   " ---------------------
   " Switch window mappings
-    nnoremap <A-Up> :normal <c-r>=SwitchWindow('+')<CR><CR>
-    nnoremap <A-Down> :normal <c-r>=SwitchWindow('-')<CR><CR>
-    nnoremap <A-Left> :normal <c-r>=SwitchWindow('<')<CR><CR>
-    nnoremap <A-Right> :normal <c-r>=SwitchWindow('>')<CR><CR>
+    nnoremap <C-Up> :normal <c-r>=SwitchWindow('+')<CR><CR>
+    nnoremap <C-Down> :normal <c-r>=SwitchWindow('-')<CR><CR>
+    nnoremap <C-Left> :normal <c-r>=SwitchWindow('<')<CR><CR>
+    nnoremap <C-Right> :normal <c-r>=SwitchWindow('>')<CR><CR>
 
     function! SwitchWindow(dir)
       let this = winnr()
@@ -36,7 +36,7 @@
         elseif '<' == a:dir
         execute "normal \<c-w>h"
       else
-        echo "oops. check your ~/.vimrc"
+        echo "oops. check your ~/.congif/nvim/module/bindings.vim"
         return ""
       endif
     endfunction

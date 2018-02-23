@@ -87,6 +87,7 @@ install_exa:
     - name: cargo install --git https://github.com/ogham/exa
     - cwd: /tmp
     - shell: /bin/bash
+    - runas: {{ defaults.user }}
     - timeout: 300
     - unless: test -x /home/{{ defaults.user }}/.cargo/bin/exa
 
@@ -111,6 +112,7 @@ install_bash_it:
         /home/{{ defaults.user }}/.bash_it/install.sh -s
     - cwd: /tmp
     - shell: /bin/bash
+    - runas: {{ defaults.user }}
     - timeout: 300
     - unless: test -x /home/{{ defaults.user }}/.bash_it/install.sh
 {% endif %}

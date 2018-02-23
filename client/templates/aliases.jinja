@@ -30,6 +30,25 @@ alias fuck='sudo $(history -p \!\!)'
 alias gsc='. /usr/local/bin/gitdate && git commit -v -S -a -m'
 alias rtfm='man $(history -p \!\!)'
 
+# enable color support of ls and also add handy aliases
+if [ -x "/usr/bin/dircolors" ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+if [ -n "$(command -v nvim)" ]; then
+    alias vcb="nvim +BundleClean! +BundleInstall! +qall!"
+    alias v="nvim"
+    alias vi="nvim"
+    alias ni="nvim"
+    alias neo"nvim"
+fi
+
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
 
@@ -123,3 +142,23 @@ alias pubkey="more ~/.ssh/id_rsa.pub | xclip -selection clipboard | echo '=> Pub
 
 # Pipe my private key to my clipboard.
 alias prikey="more ~/.ssh/keys/id_rsa | xclip -selection clipboard | echo '=> Private key copied to pasteboard.'"
+
+# Docker Aliases
+if [ -n "$(command -v docker)" ]; then
+    ## Clean All Non-In Use Docker Items
+    dcleanall(){
+        docker rm $(docker ps -aq 2>/dev/null) 2>/dev/null
+        docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+        docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+    }
+
+    ## Clean all stopped containers
+    dcleanstop(){
+        local name=$1
+        local state=$(docker inspect --format "{{.State.Running}}" $name 2>/dev/null)
+
+        if [[ "$state" == "false" ]]; then
+            docker rm $name
+        fi
+    }
+fi
