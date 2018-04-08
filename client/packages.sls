@@ -22,6 +22,14 @@ rust_ppa:
     - name: rustc
     - refresh: True
 
+hub_ppa:
+  pkgrepo.managed:
+    - ppa: cpick/hub
+
+  pkg.latest:
+    - name: hub
+    - refresh: True
+
 golang_ppa:
   pkgrepo.managed:
     - ppa: longsleep/golang-backports

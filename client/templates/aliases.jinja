@@ -30,6 +30,10 @@ alias fuck='sudo $(history -p \!\!)'
 alias gsc='. /usr/local/bin/gitdate && git commit -v -S -a -m'
 alias rtfm='man $(history -p \!\!)'
 
+if [ -n "$(command -v hub)" ]; then
+  alias git='hub'
+fi
+
 # enable color support of ls and also add handy aliases
 if [ -x "/usr/bin/dircolors" ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -142,13 +146,3 @@ alias pubkey="more ~/.ssh/id_rsa.pub | xclip -selection clipboard | echo '=> Pub
 
 # Pipe my private key to my clipboard.
 alias prikey="more ~/.ssh/keys/id_rsa | xclip -selection clipboard | echo '=> Private key copied to pasteboard.'"
-
-# Docker Aliases
-if [ -n "$(command -v docker)" ]; then
-    ## Clean All Non-In Use Docker Items
-    dcleanall(){
-        docker rm $(docker ps -aq 2>/dev/null) 2>/dev/null
-        docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
-        docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
-    }
-fi
