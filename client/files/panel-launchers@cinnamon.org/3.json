@@ -6,14 +6,16 @@
     "launcherList": {
         "type": "generic",
         "default": [
-            "firefox.desktop",
-            "gnome-terminal.desktop",
+            "terminator.desktop",
             "nemo.desktop"
         ],
         "value": [
             "nemo.desktop",
             "chromium-browser.desktop",
-            "atom.desktop"
+            "atom.desktop",
+            "code.desktop",
+            "insomnia.desktop",
+            "jetbrains-rubymine.desktop"
         ]
     },
     "allow-dragging": {
