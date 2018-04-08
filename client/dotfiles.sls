@@ -31,6 +31,8 @@
 /home/{{ defaults.user }}/.config/nvim/init.vim:
   file.managed:
     - target: /home/{{ defaults.user }}/.config/nvim/init.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - makedirs: True
     - contents:
       - source $HOME/.config/nvim/modules/init.vim
@@ -42,24 +44,32 @@
   file.managed:
     - source: salt://client/templates/neo/init.vim.jinja
     - target: /home/{{ defaults.user }}/.config/nvim/modules/init.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - makedirs: True
 
 /home/{{ defaults.user }}/.config/nvim/modules/general.vim:
   file.managed:
     - source: salt://client/templates/neo/general.vim.jinja
     - target: /home/{{ defaults.user }}/.config/nvim/modules/general.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - makedirs: True
 
 /home/{{ defaults.user }}/.config/nvim/modules/plugins.vim:
   file.managed:
     - source: salt://client/templates/neo/plugins.vim.jinja
     - target: /home/{{ defaults.user }}/.config/nvim/modules/plugins.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - makedirs: True
 
 /home/{{ defaults.user }}/.config/nvim/modules/bindings.vim:
   file.managed:
     - source: salt://client/templates/neo/bindings.vim.jinja
     - target: /home/{{ defaults.user }}/.config/nvim/modules/bindings.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - makedirs: True
 
 {% elif grains['os_family'] == 'Windows' %}
@@ -80,11 +90,15 @@ C:\Users\{{ defaults.user }}\AppData\Local\nvim\init.vim:
   file.managed:
     - source: salt://client/templates/neo/init.vim.jinja
     - target: C:\Users\{{ defaults.user }}\AppData\Local\nvim\init.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - makedirs: True
 
 C:\Users\{{ defaults.user }}/AppData/Roaming/ConEmu.xml:
   file.managed:
     - source: salt://client/templates/conemu.xml.jinja
     - target: C:\Users\{{ defaults.user }}/AppData/Roaming/ConEmu.xml
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
     - makedirs: True
 {% endif %}
