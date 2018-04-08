@@ -13,7 +13,10 @@
         "value": [
             "nemo.desktop",
             "chromium-browser.desktop",
-            "atom.desktop"
+            "atom.desktop",
+            "code.desktop",
+            "insomnia.desktop",
+            "jetbrains-rubymine.desktop"
         ]
     },
     "allow-dragging": {

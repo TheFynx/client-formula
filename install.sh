@@ -4,13 +4,15 @@ set -o nounset -o pipefail
 
 USER='levi'
 GROUP='levi'
+PACKER_VERSION='1.2.2'
 
-while getopts u:g: option
+while getopts u:g:p: option
 do
  case "${option}"
  in
  u) USER=${OPTARG};;
  g) GROUP=${OPTARG};;
+ p) PACKER_VERSION=${OPTARG};;
  esac
 done
 
@@ -83,6 +85,7 @@ EOF
 cat > '/srv/salt/base/client/defaults.yaml' << EOF
 user: $USER
 group: $GROUP
+packer_version: $PACKER_VERSION
 EOF
 
 sudo chmod 755 /etc/salt

@@ -19,3 +19,7 @@ Salt Formula to setup my Client/Workstation and DotFiles
 #### Options
 * For custom user or group
 `install.sh -u username -g groupname`
+* Version Flags also Available
+  * `-p` Packer Version
+  * `-t` Terraform Version
+  * `-`
