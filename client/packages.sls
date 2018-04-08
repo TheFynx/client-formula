@@ -38,14 +38,6 @@ neovim_ppa:
     - name: neovim
     - refresh: True
 
-atom_ppa:
-  pkgrepo.managed:
-    - ppa: webupd8team/atom
-
-  pkg.latest:
-    - name: atom
-    - refresh: True
-
 {% for pkg in
   'vim', 'vim-runtime', 'vim-gnome', 'vim-tiny', 'vim-gui-common', 'firefox',
   'thunderbird', 'tomboy', 'docker', 'docker-engine', 'docker.io', 'hexchat',
@@ -59,5 +51,6 @@ client_packages:
   pkg.installed:
     - pkgs: ['python-pip', 'htop', 'terminator', 'build-essential', 'docker-ce',
              'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit', 'xclip',
-             'python-dev', 'python3-dev', 'python3-pip', 'ncurses-dev',
-             'libtolua-dev', 'exuberant-ctags', 'pandoc', 'lynx', 'insomnia']
+             'python-dev', 'python3-dev', 'python3-pip', 'libncurses5-dev',
+             'rbenv', 'libtolua-dev', 'exuberant-ctags', 'pandoc', 'lynx',
+             'insomnia']

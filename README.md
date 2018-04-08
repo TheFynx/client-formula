@@ -22,4 +22,3 @@ Salt Formula to setup my Client/Workstation and DotFiles
 * Version Flags also Available
   * `-p` Packer Version
   * `-t` Terraform Version
-  * `-`
