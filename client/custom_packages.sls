@@ -6,7 +6,7 @@ install_exa:
     - cwd: /tmp
     - shell: /bin/bash
     - runas: {{ defaults.user }}
-    - timeout: 60
+    - timeout: 120
     - unless: test -x /home/{{ defaults.user }}/.cargo/bin/exa
 
 install_packer:

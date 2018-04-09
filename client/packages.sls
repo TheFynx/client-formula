@@ -14,6 +14,13 @@ insomnia_repo:
     - file: '/etc/apt/sources.list.d/insomnia.list'
     - key_url: 'https://insomnia.rest/keys/debian-public.key.asc'
 
+vccode_repo:
+  pkgrepo.managed:
+    - humanname: 'VS Code Repo'
+    - name: 'deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main'
+    - file: '/etc/apt/sources.list.d/vscode.list'
+    - key_url: 'http://packages.microsoft.com/keys/microsoft.asc'
+
 rust_ppa:
   pkgrepo.managed:
     - ppa: jonathonf/rustlang
@@ -61,4 +68,4 @@ client_packages:
              'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit', 'xclip',
              'python-dev', 'python3-dev', 'python3-pip', 'libncurses5-dev',
              'rbenv', 'libtolua-dev', 'exuberant-ctags', 'pandoc', 'lynx',
-             'insomnia']
+             'insomnia', 'cmake', 'libssl-dev', 'visual-studio-code']
