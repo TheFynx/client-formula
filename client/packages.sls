@@ -9,7 +9,7 @@ docker_repo:
 
 insomnia_repo:
   pkgrepo.managed:
-    - humanname: 'Insomnia Repo Client'
+    - humanname: 'Insomnia Rest Client'
     - name: 'deb https://dl.bintray.com/getinsomnia/Insomnia /'
     - file: '/etc/apt/sources.list.d/insomnia.list'
     - key_url: 'https://insomnia.rest/keys/debian-public.key.asc'
@@ -62,3 +62,4 @@ client_packages:
              'python-dev', 'python3-dev', 'python3-pip', 'libncurses5-dev',
              'rbenv', 'libtolua-dev', 'exuberant-ctags', 'pandoc', 'lynx',
              'insomnia']
+
