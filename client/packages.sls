@@ -68,4 +68,4 @@ client_packages:
              'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit', 'xclip',
              'python-dev', 'python3-dev', 'python3-pip', 'libncurses5-dev',
              'rbenv', 'libtolua-dev', 'exuberant-ctags', 'pandoc', 'lynx',
-             'insomnia', 'cmake', 'libssl-dev', 'visual-studio-code']
+             'insomnia', 'cmake', 'libssl-dev', 'code']
