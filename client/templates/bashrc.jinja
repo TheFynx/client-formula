@@ -2,8 +2,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-    *i*) ;;
-    *) return;;
+  *i*) ;;
+  *) return;;
 esac
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -19,7 +19,7 @@ bind TAB:menu-complete
 
 # Source global definitions
 if [ -f "/etc/bashrc" ]; then
-        . /etc/bashrc
+  . /etc/bashrc
 fi
 
 # Path to the bash it configuration
@@ -27,15 +27,15 @@ export BASH_IT="{{ home }}/.bash_it"
 
 # Load Bash It
 if [ -f "$BASH_IT/bash_it.sh" ]; then
-    # Lock and Load a custom theme file
-    # location /.bash_it/themes/
-    export BASH_IT_THEME='powerline'
+  # Lock and Load a custom theme file
+  # location /.bash_it/themes/
+  export BASH_IT_THEME='powerline'
 
-    # Don't check mail when opening terminal.
-    unset MAILCHECK
+  # Don't check mail when opening terminal.
+  unset MAILCHECK
 
-    # Set this to false to turn off version control status checking within the prompt for all themes
-    export SCM_CHECK=true
+  # Set this to false to turn off version control status checking within the prompt for all themes
+  export SCM_CHECK=true
 
-    source $BASH_IT/bash_it.sh
+  source $BASH_IT/bash_it.sh
 fi

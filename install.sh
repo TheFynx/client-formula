@@ -7,7 +7,7 @@ GROUP='levi'
 PACKER_VERSION='1.2.2'
 TERRAFORM_VERSION='0.11.6'
 RUBY_VERSION='2.5.1'
-PYTHON_VERSION='3.5.2'
+PYTHON_VERSION='3.6.5'
 ATOM_USER='thefynx'
 QUICK='n'
 
@@ -163,8 +163,8 @@ ruby_versions:
   - 2.5.0
   - 2.5.1
 python_versions:
-  - 2.7.12
-  - 3.5.2
+  - 2.7.14
+  - 3.6.5
 EOF
 
 sudo chmod 755 /etc/salt

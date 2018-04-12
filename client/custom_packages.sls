@@ -122,10 +122,9 @@ enable_bash_it_ssh:
     - user: {{ defaults.user }}
     - group: {{ defaults.group }}
 
-# enable_bash_it_pyenv:
-#   cmd.run:
-#     - name: bashit enable plugin pyenv
-#     - runas: {{ defaults.user }}
-#     - shell: /bin/bash
-#     - timeout: 100
-#     - unless: test -x /home/{{ defaults.user }}/.bash_it/enabled/*pyenv.plugin.bash
+enable_bash_it_pyenv:
+    file.symlink:
+      - name: /home/{{ defaults.user }}/.bash_it/enabled/250---pyenv.plugin.bash
+      - target: /home/{{ defaults.user }}/.bash_it/plugins/available/pyenv.plugin.bash
+      - user: {{ defaults.user }}
+      - group: {{ defaults.group }}

@@ -1,7 +1,5 @@
 include:
 {% if grains['os_family'] == 'Debian' %}
-  - client.dotfiles
-  - client.config
 {% if not grains['quick'] %}
   - client.packages
   - client.pip_packages
@@ -9,6 +7,8 @@ include:
   - client.custom_packages
   - client.atom
 {% endif %}
+  - client.dotfiles
+  - client.config
 {% elif grains['os_family'] == 'Windows' %}
   - client.chocolately_packages
   - client.pip_packages

@@ -17,6 +17,9 @@ update_pyenv:
     - timeout: 100
     - onlyif: test -x /home/{{ defaults.user }}/.pyenv
 
+include:
+  - client.dotfiles
+
 {% for version in defaults.python_versions %}
 install_python_version {{ version }}:
   cmd.run:
