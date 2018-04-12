@@ -6,7 +6,8 @@ USER='levi'
 GROUP='levi'
 PACKER_VERSION='1.2.2'
 TERRAFORM_VERSION='0.11.6'
-RUBY_VERSION='2.5.0'
+RUBY_VERSION='2.5.1'
+PYTHON_VERSION='3.5.2'
 ATOM_USER='thefynx'
 QUICK='n'
 
@@ -17,12 +18,13 @@ print_help() {
   echo "-p | Pass Packer Version to Install - install.sh -p 1.2.2 - Default: ${PACKER_VERSION}"
   echo "-t | Pass Terraform Version to Install - install.sh -t 0.11.6 - Default: ${TERRAFORM_VERSION}"
   echo "-r | Pass Ruby Version to Set for RBENV - install.sh -r 2.5.0 - Default: ${RUBY_VERSION}"
+  echo "-py | Pass Python Version to Set for PYENV - install.sh -r 3.5.0 - Default: ${PYTHON_VERSION}"
   echo "-a | Pass Atom User to installed starred items from - install.sh -a USERNAME - Default: ${ATOM_USER}"
   echo "-q | Set quick run mode, does not include longer running states - install.sh -q y - Default: ${QUICK}"
   echo "-? | List this help menu"
 }
 
-while getopts u:g:p:t:r:a:q:?: option
+while getopts u:g:p:t:r:py:a:q:?: option
 do
  case "${option}"
  in
@@ -31,6 +33,7 @@ do
  p) PACKER_VERSION=${OPTARG};;
  t) TERRAFORM_VERSION=${OPTARG};;
  r) RUBY_VERSION=${OPTARG};;
+ py) PYTHON_VERSION=${OPTARG};;
  a) ATOM_USER=${OPTARG};;
  q) QUICK=${OPTARG};;
  ?) print_help; exit 2;;
@@ -154,7 +157,14 @@ group: $GROUP
 packer_version: $PACKER_VERSION
 terraform_version: $TERRAFORM_VERSION
 ruby_version: $RUBY_VERSION
+python_version: $PYTHON_VERSION
 atom_user: $ATOM_USER
+ruby_versions:
+  - 2.5.0
+  - 2.5.1
+python_versions:
+  - 2.7.12
+  - 3.5.2
 EOF
 
 sudo chmod 755 /etc/salt

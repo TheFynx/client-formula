@@ -37,6 +37,14 @@ hub_ppa:
     - name: hub
     - refresh: True
 
+hh_ppa:
+  pkgrepo.managed:
+    - ppa: ultradvorka/ppa
+
+  pkg.latest:
+    - name: hh
+    - refresh: True
+
 golang_ppa:
   pkgrepo.managed:
     - ppa: longsleep/golang-backports
