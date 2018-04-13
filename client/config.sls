@@ -20,3 +20,8 @@ Copy Cinnamon Config:
     - name: /home/{{ defaults.user }}/.cinnamon/configs/
     - source: salt://client/files/
     - mkdirs: true
+
+docker:
+  group.present:
+    - addusers:
+      - {{ defaults.user }}
