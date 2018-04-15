@@ -66,8 +66,9 @@ neovim_ppa:
   'thunderbird', 'tomboy', 'docker', 'docker-engine', 'docker.io', 'hexchat',
   'pidgin', 'redshift', 'timeshift', 'rhythmbox', 'transmission-gtk'
 %}
-{{ pkg }}:
-  pkg.removed
+remove {{ pkg }}:
+  pkg.removed:
+    - name: {{ pkg }}
 {% endfor %}
 
 client_packages:
@@ -76,4 +77,5 @@ client_packages:
              'cargo', 'vlc', 'chromium-browser', 'dconf-cli', 'clipit', 'xclip',
              'python-dev', 'python3-dev', 'python3-pip', 'libncurses5-dev',
              'rbenv', 'libtolua-dev', 'exuberant-ctags', 'pandoc', 'lynx',
-             'insomnia', 'cmake', 'libssl-dev', 'code', 'python-gpgme']
+             'insomnia', 'cmake', 'libssl-dev', 'code', 'python-gpgme',
+             'clamav-daemon', 'clamav-freshclam', 'clamtk']
