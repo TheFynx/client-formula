@@ -88,16 +88,52 @@ C:\Users\{{ defaults.user }}/.{{ dot }}:
 
 C:\Users\{{ defaults.user }}\AppData\Local\nvim\init.vim:
   file.managed:
+    - target: /home/{{ defaults.user }}/.config/nvim/init.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
+    - makedirs: True
+    - contents:
+      - source $HOME/.config/nvim/modules/init.vim
+      - source $HOME/.config/nvim/modules/general.vim
+      - source $HOME/.config/nvim/modules/plugins.vim
+      - source $HOME/.config/nvim/modules/bindings.vim
+
+C:\Users\{{ defaults.user }}\AppData\Local\nvim\modules\init.vim:
+  file.managed:
     - source: salt://client/templates/neo/init.vim.jinja
     - target: C:\Users\{{ defaults.user }}\AppData\Local\nvim\init.vim
     - user: {{ defaults.user }}
     - group: {{ defaults.group }}
     - makedirs: True
 
-C:\Users\{{ defaults.user }}/AppData/Roaming/ConEmu.xml:
+C:\Users\{{ defaults.user }}\AppData\Local\nvim\modules\general.vim:
+  file.managed:
+    - source: salt://client/templates/neo/general.vim.jinja
+    - target: C:\Users\{{ defaults.user }}\AppData\Local\nvim\modules\general.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
+    - makedirs: True
+
+C:\Users\{{ defaults.user }}\AppData\Local\nvim\modules\plugins.vim:
+  file.managed:
+    - source: salt://client/templates/neo/plugins.vim.jinja
+    - target: C:\Users\{{ defaults.user }}\AppData\Local\nvim\modules\plugins.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
+    - makedirs: True
+
+C:\Users\{{ defaults.user }}\AppData\Local\nvim\modules\bindings.vim:
+  file.managed:
+    - source: salt://client/templates/neo/bindings.vim.jinja
+    - target: C:\Users\{{ defaults.user }}\AppData\Local\nvim\modules\bindings.vim
+    - user: {{ defaults.user }}
+    - group: {{ defaults.group }}
+    - makedirs: True
+
+C:\Users\{{ defaults.user }}\AppData\Roaming\ConEmu.xml:
   file.managed:
     - source: salt://client/templates/conemu.xml.jinja
-    - target: C:\Users\{{ defaults.user }}/AppData/Roaming/ConEmu.xml
+    - target: C:\Users\{{ defaults.user }}\AppData\Roaming\ConEmu.xml
     - user: {{ defaults.user }}
     - group: {{ defaults.group }}
     - makedirs: True

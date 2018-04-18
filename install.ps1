@@ -81,8 +81,7 @@ if (Test-Path C:\salt\conf\minion_id) {
 $salt_top = @"
 base:
   '*':
-    - client.packages
-    - client.dotfiles
+    - client
 "@
 
 if (Test-Path C:\salt\srv\salt) {

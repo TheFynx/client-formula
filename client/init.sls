@@ -11,7 +11,5 @@ include:
   - client.config
 {% elif grains['os_family'] == 'Windows' %}
   - client.chocolately_packages
-  - client.pip_packages
   - client.dotfiles
-  - client.config
 {% endif %}
