@@ -1,7 +1,5 @@
 # Requires -Version 3.0
 
-$user=$env:UserName
-
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
 [Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Warning "Script requires Admin Privileges.`nPlease re-run this script as an Administrator."
@@ -34,26 +32,26 @@ refreshenv
 
 # Create Directories
 New-Item C:\salt\srv\salt\base -ItemType Directory -Force
-New-Item C:\Users\$user\formulas -ItemType Directory -Force
+New-Item C:\Users\$env:UserName\formulas -ItemType Directory -Force
 
 # Clone Repo
 Write-Host "Getting Client Salt Formula"
-if ( Test-Path C:\Users\$user\formulas\client-formula ) {
-    Set-Location -Path C:\Users\$user\formulas\client-formula
+if ( Test-Path C:\Users\$env:UserName\formulas\client-formula ) {
+    Set-Location -Path C:\Users\$env:UserName\formulas\client-formula
     git pull
 } else {
-    Set-Location -Path C:\Users\$user\formulas
+    Set-Location -Path C:\Users\$env:UserName\formulas
     git clone https://github.com/TheFynx/client-formula.git
 }
 
 # Link Directories
 if (!(Test-Path C:\salt\srv\salt\base\client)) {
   Write-Host "Linking Directories"
-    New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\$user\formulas\client-formula\client
+    New-Item -Path C:\salt\srv\salt\base\client -ItemType SymbolicLink -Value C:\Users\$env:UserName\formulas\client-formula\client
 }
 
 # Set ACLs
-$UserACL  = Get-Acl -Path "C:\Users\$user\Desktop"
+$env:UserNameACL  = Get-Acl -Path "C:\Users\$env:UserName\Desktop"
 Set-Acl -Path "C:\salt\" -AclObject $UserACL
 Get-ChildItem -Path "C:\salt\" -Recurse -Force | Set-Acl -AclObject $UserACL
 
@@ -90,8 +88,8 @@ if (Test-Path C:\salt\srv\salt) {
 }
 
 $defaults = @"
-user: "$user"
-group: "$user"
+user: "$env:UserName"
+group: "$env:UserName"
 "@
 
 if (Test-Path C:\salt\srv\salt\base\client) {
