@@ -102,7 +102,7 @@ Host github.com
   User git
   Hostname github.com
   PreferredAuthentications publickey
-  IdentityFile /home/user/.ssh/git
+  IdentityFile /home/${USER}/.ssh/git
 EOF
   fi
 fi
