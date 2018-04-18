@@ -1,6 +1,6 @@
 # Requires -Version 3.0
 
-$user=$args[0]
+$user=$env:UserName
 
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
 [Security.Principal.WindowsBuiltInRole] "Administrator")) {
