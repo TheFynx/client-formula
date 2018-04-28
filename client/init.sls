@@ -2,8 +2,9 @@ include:
 {% if grains['os_family'] == 'Debian' %}
 {% if not grains['quick'] %}
   - client.packages
-  - client.pip_packages
-  - client.gem_packages
+  - client.python
+  - client.go
+  - client.ruby
   - client.custom_packages
   - client.atom
 {% endif %}

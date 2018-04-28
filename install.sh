@@ -8,6 +8,7 @@ PACKER_VERSION='1.2.2'
 TERRAFORM_VERSION='0.11.6'
 RUBY_VERSION='2.5.1'
 PYTHON_VERSION='3.6.5'
+GOLANG_VERSION='1.10.1'
 ATOM_USER='thefynx'
 QUICK='n'
 
@@ -19,12 +20,13 @@ print_help() {
   echo "-t | Pass Terraform Version to Install - install.sh -t 0.11.6 - Default: ${TERRAFORM_VERSION}"
   echo "-r | Pass Ruby Version to Set for RBENV - install.sh -r 2.5.0 - Default: ${RUBY_VERSION}"
   echo "-py | Pass Python Version to Set for PYENV - install.sh -r 3.5.0 - Default: ${PYTHON_VERSION}"
+  echo "-go | Pass Golang Version to Set for GOENV - install.sh -r 1.10.1 - Default: ${GOLANG_VERSION}"
   echo "-a | Pass Atom User to installed starred items from - install.sh -a USERNAME - Default: ${ATOM_USER}"
   echo "-q | Set quick run mode, does not include longer running states - install.sh -q y - Default: ${QUICK}"
   echo "-? | List this help menu"
 }
 
-while getopts u:g:p:t:r:py:a:q:?: option
+while getopts u:g:p:t:r:py:go:a:q:? option
 do
  case "${option}"
  in
@@ -34,6 +36,7 @@ do
  t) TERRAFORM_VERSION=${OPTARG};;
  r) RUBY_VERSION=${OPTARG};;
  py) PYTHON_VERSION=${OPTARG};;
+ go) GOLANG_VERSION=${OPTARG};;
  a) ATOM_USER=${OPTARG};;
  q) QUICK=${OPTARG};;
  ?) print_help; exit 2;;
@@ -158,6 +161,7 @@ packer_version: $PACKER_VERSION
 terraform_version: $TERRAFORM_VERSION
 ruby_version: $RUBY_VERSION
 python_version: $PYTHON_VERSION
+golang_version: $GOLANG_VERSION
 atom_user: $ATOM_USER
 ruby_versions:
   - 2.5.0
@@ -165,6 +169,9 @@ ruby_versions:
 python_versions:
   - 2.7.14
   - 3.6.5
+golang_versions:
+  - 1.10.1
+  - 1.9.5
 EOF
 
 sudo chmod 755 /etc/salt
