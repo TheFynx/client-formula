@@ -110,6 +110,11 @@ EOF
   fi
 fi
 
+if [ ! -f "${USER_HOME}/.ssh/id_rsa" ]; then
+  echo ">>> Client Install: Generating SSH Keys"
+  ssh-keygen -t rsa -N "" -f ${USER_HOME}/.ssh/id_rsa
+fi
+
 if [ -d "${USER_HOME}/formulas/client-formula" ]; then
     cd ${USER_HOME}/formulas/client-formula
     git pull
